@@ -1,0 +1,51 @@
+[project]
+name = "smartpole"
+version = "0.1.0"
+description = "智慧杆異常用電 / 設備預警系統 — 資料串接、特徵工程與模型訓練"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    # 資料讀取與處理
+    "pandas>=2.2",
+    "numpy>=2.0",
+    "pyarrow>=17",          # parquet 輸出、pandas 加速
+    "polars>=1.0",          # 大檔（camerastringinfo 2GB+）快速處理
+    "duckdb>=1.1",          # 直接對 CSV 下 SQL，不必整包載入記憶體
+    "openpyxl>=3.1",        # 寫 xlsx
+    "python-calamine>=0.2", # 快速讀取 70MB 的 5-6月電表 xlsx
+
+    # 特徵工程 / 統計
+    "scipy>=1.13",
+    "statsmodels>=0.14",    # STL 季節分解、ACF 等時序特徵
+
+    # 傳統 ML / 異常偵測
+    "scikit-learn>=1.5",    # Isolation Forest、前處理、評估指標
+    "pyod>=2.0",            # 多種無監督異常偵測模型
+    "lightgbm>=4.5",
+    "xgboost>=2.1",
+    "shap>=0.46",           # 模型解釋
+
+    # 深度學習（LSTM-Autoencoder / Transformer）
+    "torch>=2.6",
+
+    # 視覺化
+    "matplotlib>=3.9",
+    "seaborn>=0.13",
+    "plotly>=5.24",
+
+    # Notebook 與工具
+    "jupyterlab>=4.2",
+    "ipykernel>=6.29",
+    "tqdm>=4.66",
+]
+
+[tool.uv]
+package = false
+
+# torch 使用 CUDA 12.8 版本（本機 RTX 4060 Ti）
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu128" }]
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true

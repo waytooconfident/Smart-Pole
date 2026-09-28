@@ -1,0 +1,901 @@
+<title>PoleWatch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>
+:root {
+  --ground: #f3f5f8; --surface: #ffffff; --surface-2: #f7f9fb; --ink: #111a2b; --ink-2: #4a5568; --muted: #7b8494;
+  --rule: #e2e6ec; --rule-strong: #cfd5de; --navy: #16305a; --navy-ink: #ffffff; --navy-soft: #e6edf7;
+  --accent: #1f5fb8; --focus: #2a78d6;
+  --c-actual: #2a78d6; --c-expected: #8a93a3; --c-band: rgba(42,120,214,0.08); --c-event: rgba(208,59,59,0.10);
+  --c-single: #2a78d6; --c-fleet: #6d5bd0; --c-people: #1baf7a; --c-light: #d99a00;
+  --crit: #c93434; --crit-soft: #fbe9e9; --high: #d8692f; --high-soft: #fcefe6; --med: #a67700; --med-soft: #fbf3dc;
+  --ok: #1f8a3b; --ok-soft: #e5f4e8; --fleet: #5a48c4; --fleet-soft: #ecebfa; --out: #6b7280; --out-soft: #eef0f3;
+  --grid: #eceff3; --axis: #c9cfd8;
+  --shadow: 0 1px 2px rgba(17,26,43,.05), 0 1px 1px rgba(17,26,43,.03);
+  --sans: "IBM Plex Sans", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --ground: #0e131a; --surface: #161d27; --surface-2: #1b2330; --ink: #eef2f7; --ink-2: #b4bfcd; --muted: #8592a5;
+    --rule: #263142; --rule-strong: #334155; --navy: #214a86; --navy-ink: #ffffff; --navy-soft: #1c2b42;
+    --accent: #7fb0ee; --focus: #7fb0ee;
+    --c-actual: #5b9ff0; --c-expected: #8d97a8; --c-band: rgba(91,159,240,0.10); --c-event: rgba(238,120,120,0.14);
+    --c-single: #5b9ff0; --c-fleet: #9a8cf0; --c-people: #2cc68d; --c-light: #e6ad1f;
+    --crit: #f07d7d; --crit-soft: #3a1d1f; --high: #f0a070; --high-soft: #3a2519; --med: #e6c15a; --med-soft: #332a12;
+    --ok: #5fcf7c; --ok-soft: #173020; --fleet: #a99cf5; --fleet-soft: #262245; --out: #a3acb9; --out-soft: #222a36;
+    --grid: #1f2835; --axis: #3a4556;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ground: #0e131a; --surface: #161d27; --surface-2: #1b2330; --ink: #eef2f7; --ink-2: #b4bfcd; --muted: #8592a5;
+  --rule: #263142; --rule-strong: #334155; --navy: #214a86; --navy-ink: #ffffff; --navy-soft: #1c2b42;
+  --accent: #7fb0ee; --focus: #7fb0ee;
+  --c-actual: #5b9ff0; --c-expected: #8d97a8; --c-band: rgba(91,159,240,0.10); --c-event: rgba(238,120,120,0.14);
+  --c-single: #5b9ff0; --c-fleet: #9a8cf0; --c-people: #2cc68d; --c-light: #e6ad1f;
+  --crit: #f07d7d; --crit-soft: #3a1d1f; --high: #f0a070; --high-soft: #3a2519; --med: #e6c15a; --med-soft: #332a12;
+  --ok: #5fcf7c; --ok-soft: #173020; --fleet: #a99cf5; --fleet-soft: #262245; --out: #a3acb9; --out-soft: #222a36;
+  --grid: #1f2835; --axis: #3a4556;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink); font-family: var(--sans); font-size: 14px; line-height: 1.55; }
+button, select, input { font: inherit; color: inherit; }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.mono { font-family: var(--mono); }
+.num { font-variant-numeric: tabular-nums; }
+
+.app { display: grid; grid-template-columns: 236px 1fr; min-height: 100%; }
+.side { background: var(--surface); border-right: 1px solid var(--rule); display: flex; flex-direction: column; position: sticky; top: env(safe-area-inset-top, 0px); height: 100vh; }
+.brand { display: flex; gap: 12px; align-items: center; padding: 22px 20px 20px; border-bottom: 1px solid var(--rule); }
+.brand svg { flex: none; }
+.brand b { display: block; font-size: 17px; letter-spacing: .01em; }
+.brand span { display: block; font-size: 12px; color: var(--ink-2); font-weight: 500; }
+.nav { display: grid; gap: 4px; padding: 16px 12px; }
+.nav a { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; color: var(--ink-2); text-decoration: none; font-weight: 500; border: 1px solid transparent; }
+.nav a:hover { background: var(--surface-2); color: var(--ink); }
+.nav a[aria-current="page"] { background: var(--navy-soft); color: var(--ink); border-color: var(--rule); box-shadow: inset 3px 0 0 var(--navy); }
+.nav a .k { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.nav a svg { flex: none; opacity: .85; }
+.side-foot { margin-top: auto; padding: 16px 20px; border-top: 1px solid var(--rule); font-size: 12px; color: var(--ink-2); display: grid; gap: 2px; }
+.side-foot b { color: var(--ink); }
+
+.main { min-width: 0; display: flex; flex-direction: column; }
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: color-mix(in srgb, var(--ground) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--rule); display: flex; align-items: center; gap: 12px; padding: 12px 24px; flex-wrap: wrap; }
+.crumb { display: flex; gap: 10px; align-items: center; color: var(--muted); font-size: 13px; }
+.crumb b { color: var(--ink); font-weight: 600; }
+.crumb i { width: 1px; height: 16px; background: var(--rule-strong); }
+.top .spacer { flex: 1; }
+.seg { display: inline-flex; background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 3px; gap: 2px; }
+.seg button { border: 0; background: none; padding: 5px 12px; border-radius: 6px; cursor: pointer; color: var(--ink-2); font-weight: 500; font-size: 13px; }
+.seg button[aria-pressed="true"] { background: var(--surface-2); color: var(--ink); box-shadow: 0 0 0 1px var(--rule-strong); }
+.pill { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--rule); background: var(--surface); border-radius: 8px; padding: 6px 10px; font-size: 12.5px; color: var(--ink-2); }
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); display: inline-block; }
+
+.page { padding-inline: 24px; padding-block: 26px 56px; display: grid; gap: 20px; max-width: 1240px; width: 100%; }
+.page[hidden] { display: none !important; }
+.head { display: flex; gap: 16px; align-items: flex-end; flex-wrap: wrap; }
+.head > div { flex: 1 1 380px; display: grid; gap: 4px; }
+h1 { margin: 0; font-size: 27px; line-height: 1.25; font-weight: 700; text-wrap: balance; }
+h2 { margin: 0; font-size: 16px; font-weight: 600; }
+h3 { margin: 0; font-size: 14px; font-weight: 600; }
+.sub { margin: 0; color: var(--ink-2); font-size: 14.5px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; border: 0; border-radius: 8px; padding: 10px 16px; background: var(--navy); color: var(--navy-ink); font-weight: 600; cursor: pointer; text-decoration: none; }
+.btn.ghost { background: var(--surface); color: var(--ink); border: 1px solid var(--rule); }
+.link { background: none; border: 0; color: var(--accent); cursor: pointer; font-weight: 600; padding: 0; font-size: 13px; }
+
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; box-shadow: var(--shadow); padding: 18px 20px; display: grid; gap: 14px; min-width: 0; }
+.card-h { display: flex; gap: 12px; align-items: flex-start; flex-wrap: wrap; }
+.card-h > div { flex: 1 1 220px; display: grid; gap: 2px; }
+.card-h p { margin: 0; color: var(--ink-2); font-size: 12.5px; }
+.note { margin: 0; color: var(--muted); font-size: 12px; }
+
+.kpis { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; }
+.kpi { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; display: grid; gap: 6px; box-shadow: var(--shadow); align-content: start; }
+.kpi .l { font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
+.kpi .v { font-size: 30px; font-weight: 700; line-height: 1.1; }
+.kpi .v small { font-size: 13px; font-weight: 500; color: var(--muted); margin-left: 3px; }
+.kpi .d { font-size: 12px; color: var(--ink-2); }
+.kpi.hero { background: var(--navy); border-color: var(--navy); color: var(--navy-ink); }
+.kpi.hero .l, .kpi.hero .d, .kpi.hero .v small { color: rgba(255,255,255,.78); }
+
+.grid-2 { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 20px; }
+@media (max-width: 1080px) { .grid-2 { grid-template-columns: 1fr; } }
+
+.tbl-wrap { overflow-x: auto; margin-inline: -4px; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th { text-align: left; font-weight: 600; color: var(--muted); font-size: 12px; padding: 8px 10px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+th button { background: none; border: 0; padding: 0; color: inherit; font-weight: 600; cursor: pointer; font-size: 12px; }
+td { padding: 10px; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+tbody tr { cursor: pointer; }
+tbody tr:hover td { background: var(--surface-2); }
+tbody tr:last-child td { border-bottom: 0; }
+td.num, th.num { text-align: right; }
+.pole-tag { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; white-space: nowrap; }
+.pole-tag i { font-style: normal; font-family: var(--mono); font-size: 11px; font-weight: 500; background: var(--surface-2); border: 1px solid var(--rule); border-radius: 5px; padding: 1px 5px; color: var(--ink-2); }
+.sev { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; letter-spacing: .03em; border-radius: 5px; padding: 2px 7px; white-space: nowrap; }
+.sev::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.sev.crit { color: var(--crit); background: var(--crit-soft); }
+.sev.high { color: var(--high); background: var(--high-soft); }
+.sev.med { color: var(--med); background: var(--med-soft); }
+.sev.ok { color: var(--ok); background: var(--ok-soft); }
+.sev.fleet { color: var(--fleet); background: var(--fleet-soft); }
+.sev.out { color: var(--out); background: var(--out-soft); }
+.chip { display: inline-block; font-size: 11.5px; border: 1px solid var(--rule); border-radius: 5px; padding: 1px 6px; color: var(--ink-2); background: var(--surface-2); margin: 1px 3px 1px 0; white-space: nowrap; }
+.bar-mini { display: inline-block; height: 5px; border-radius: 3px; background: var(--crit); vertical-align: middle; margin-right: 8px; }
+
+.chart { position: relative; width: 100%; }
+.chart svg { display: block; width: 100%; overflow: visible; }
+.chart text { fill: var(--muted); font-size: 11px; font-family: var(--sans); }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--rule-strong); border-radius: 8px; padding: 8px 10px; font-size: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.12); white-space: nowrap; z-index: 3; display: grid; gap: 2px; }
+.tip b { font-weight: 600; }
+.tip .row { display: flex; align-items: center; gap: 8px; color: var(--ink-2); }
+.tip .row i { width: 10px; height: 3px; border-radius: 2px; display: inline-block; }
+.tip .row span:last-child { margin-left: auto; color: var(--ink); font-family: var(--mono); padding-left: 12px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 14px; height: 3px; border-radius: 2px; display: inline-block; }
+.legend i.blk { width: 10px; height: 10px; border-radius: 2px; }
+
+.map-wrap { display: grid; gap: 10px; }
+.map svg { width: 100%; display: block; }
+.map .pt { cursor: pointer; }
+.map text { font-family: var(--mono); font-size: 11px; fill: var(--ink-2); }
+
+.list { display: grid; }
+.li { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 10px 2px; border-top: 1px solid var(--rule); cursor: pointer; background: none; border-left: 0; border-right: 0; border-bottom: 0; text-align: left; width: 100%; }
+.li:first-child { border-top: 0; }
+.li:hover { background: var(--surface-2); }
+.li .t { display: grid; gap: 1px; min-width: 0; }
+.li .t b { font-weight: 600; font-size: 13px; }
+.li .t span { color: var(--ink-2); font-size: 12px; }
+.li .arrow { color: var(--muted); }
+.score-badge { font-family: var(--mono); font-weight: 500; font-size: 15px; min-width: 44px; text-align: right; }
+
+.filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.field { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); padding: 6px 10px; font-size: 13px; color: var(--muted); }
+.field select, .field input { border: 0; background: none; color: var(--ink); outline: none; font-size: 13px; }
+.counts { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.drawer-bg { position: fixed; inset: 0; background: rgba(10,16,26,.28); z-index: 20; }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(640px, 100%); background: var(--ground); border-left: 1px solid var(--rule); z-index: 21; display: flex; flex-direction: column; box-shadow: -12px 0 32px rgba(0,0,0,.12); padding-top: env(safe-area-inset-top, 0px); }
+@media (prefers-reduced-motion: no-preference) { .drawer { animation: slide .22s ease-out; } @keyframes slide { from { transform: translateX(24px); opacity: .6; } } }
+.drawer-h { background: var(--surface); border-bottom: 1px solid var(--rule); padding: 16px 20px 0; display: grid; gap: 10px; }
+.drawer-h .row { display: flex; gap: 12px; align-items: flex-start; }
+.drawer-h .row > div { flex: 1; display: grid; gap: 2px; min-width: 0; }
+.drawer-h .eyebrow { font-size: 11.5px; color: var(--muted); font-weight: 600; letter-spacing: .04em; }
+.drawer-h h2 { font-size: 18px; font-family: var(--mono); font-weight: 500; overflow-wrap: anywhere; }
+.x { border: 1px solid var(--rule); background: var(--surface); border-radius: 8px; width: 34px; height: 34px; cursor: pointer; flex: none; }
+.tabs { display: flex; gap: 2px; overflow-x: auto; }
+.tabs button { border: 0; background: none; padding: 10px 12px; cursor: pointer; color: var(--ink-2); font-weight: 500; border-bottom: 2px solid transparent; white-space: nowrap; }
+.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--navy); font-weight: 600; }
+.drawer-b { overflow-y: auto; padding: 18px 20px 40px; display: grid; gap: 16px; align-content: start; }
+.facts { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.fact { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px; display: grid; gap: 4px; }
+.fact .l { font-size: 12px; color: var(--muted); font-weight: 600; }
+.fact .v { font-size: 20px; font-weight: 700; }
+.fact .v.sm { font-size: 15px; font-weight: 600; }
+.explain { background: var(--surface); border: 1px solid var(--rule); border-left: 3px solid var(--navy); border-radius: 0 10px 10px 0; padding: 12px 14px; margin: 0; }
+.hbar { display: grid; grid-template-columns: 130px 1fr 52px; gap: 10px; align-items: center; font-size: 13px; }
+.hbar .track { height: 10px; background: var(--surface-2); border: 1px solid var(--rule); border-radius: 5px; overflow: hidden; position: relative; }
+.hbar .fill { position: absolute; inset: 0 auto 0 0; background: var(--c-actual); border-radius: 5px; }
+.hbar .thr { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--ink-2); }
+
+.heat { border-collapse: separate; border-spacing: 3px; width: auto; }
+.heat td, .heat th { border: 0; padding: 0; }
+.heat td.cell { width: 64px; height: 34px; text-align: center; border-radius: 5px; font-family: var(--mono); font-size: 12.5px; cursor: default; }
+.heat th { padding: 0 8px; font-size: 12px; }
+.heat td.kind { padding-right: 12px; font-size: 13px; color: var(--ink); white-space: nowrap; cursor: default; }
+.heat tbody tr { cursor: default; }
+.heat tbody tr:hover td { background: inherit; }
+
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: s; }
+.steps li { display: grid; grid-template-columns: 36px 1fr; gap: 14px; padding: 14px 0; border-top: 1px solid var(--rule); counter-increment: s; }
+.steps li:first-child { border-top: 0; }
+.steps li::before { content: counter(s); width: 28px; height: 28px; border-radius: 50%; background: var(--navy-soft); color: var(--ink); display: grid; place-items: center; font-family: var(--mono); font-size: 13px; font-weight: 500; border: 1px solid var(--rule); }
+.steps b { display: block; margin-bottom: 2px; }
+.steps p { margin: 0; color: var(--ink-2); font-size: 13.5px; max-width: 72ch; }
+.timeline { display: grid; gap: 10px; }
+.tl-row { display: grid; grid-template-columns: 70px 1fr; gap: 12px; align-items: center; font-size: 12.5px; }
+.tl-bar { display: flex; height: 34px; border-radius: 8px; overflow: hidden; border: 1px solid var(--rule); }
+.tl-bar div { display: grid; place-items: center; font-family: var(--mono); font-size: 11.5px; color: var(--ink); border-right: 2px solid var(--surface); min-width: 0; overflow: hidden; white-space: nowrap; }
+.tl-bar div:last-child { border-right: 0; }
+.seg-train { background: var(--navy-soft); } .seg-cal { background: var(--med-soft); } .seg-test { background: var(--crit-soft); }
+.callout { background: var(--med-soft); border-left: 3px solid var(--med); border-radius: 0 10px 10px 0; padding: 12px 14px; margin: 0; font-size: 13.5px; }
+.callout ul { margin: 6px 0 0; padding-left: 18px; }
+.empty { color: var(--muted); padding: 16px 0; text-align: center; }
+.loading { padding: 80px 24px; color: var(--ink-2); }
+
+@media (max-width: 900px) {
+  .app { grid-template-columns: 1fr; }
+  .side { position: static; height: auto; flex-direction: row; flex-wrap: wrap; align-items: center; border-right: 0; border-bottom: 1px solid var(--rule); }
+  .brand { border-bottom: 0; padding: 12px 16px; }
+  .nav { display: flex; overflow-x: auto; padding: 0 12px 10px; width: 100%; }
+  .nav a { padding: 8px 10px; white-space: nowrap; }
+  .nav a .k { display: none; }
+  .side-foot { display: none; }
+  .top { padding: 10px 16px; }
+  .page { padding-inline: 16px; }
+  .hbar { grid-template-columns: 100px 1fr 44px; }
+}
+</style>
+
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect x="1" y="1" width="32" height="32" rx="9" fill="var(--navy)"/><path d="M17 7v20M12 11h10M17 11l-4 5M17 11l4 5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="17" cy="27" r="2" fill="#fff"/></svg>
+      <div><b>PoleWatch AI</b><span>智慧杆異常預警</span></div>
+    </div>
+    <nav class="nav" aria-label="主要頁面">
+      <a href="#overview" data-page="overview"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 2h5v5H2zM9 2h5v3H9zM9 7h5v7H9zM2 9h5v5H2z" fill="currentColor"/></svg>總覽<span class="k">1</span></a>
+      <a href="#poles" data-page="poles"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 1v14M5 4h6M5 4l-2 3M11 4l2 3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>杆體<span class="k">2</span></a>
+      <a href="#alarms" data-page="alarms"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 1.5L15 14H1z" fill="currentColor"/><path d="M8 6v4M8 11.6v.4" stroke="var(--surface)" stroke-width="1.6" stroke-linecap="round"/></svg>警報<span class="k">3</span></a>
+      <a href="#model" data-page="model"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 1l6 3.5v7L8 15l-6-3.5v-7z" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M2 4.5L8 8l6-3.5M8 8v7" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>模型驗證<span class="k">4</span></a>
+      <a href="#method" data-page="method"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="3.5" cy="3.5" r="2" fill="currentColor"/><circle cx="12.5" cy="12.5" r="2" fill="currentColor"/><path d="M5.5 3.5h5a2 2 0 012 2v1a2 2 0 01-2 2h-5a2 2 0 00-2 2v1a2 2 0 002 2h5" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>方法<span class="k">5</span></a>
+    </nav>
+    <div class="side-foot"><b>競賽展示</b><span>台北松菸 · 9 根智慧杆</span><span id="gen-note">—</span></div>
+  </aside>
+
+  <div class="main">
+    <header class="top">
+      <div class="crumb"><span>Workspace</span><i></i><b id="crumb-page">總覽</b></div>
+      <span class="spacer"></span>
+      <div class="seg" role="group" aria-label="展示期間" id="period-seg"></div>
+      <span class="pill" id="data-status"><span class="dot"></span>資料狀態</span>
+    </header>
+
+    <div class="loading" id="loading">載入資料中…</div>
+
+    <!-- 1 總覽 -->
+    <section class="page" id="page-overview" hidden>
+      <div class="head">
+        <div>
+          <h1>杆體異常總覽</h1>
+          <p class="sub">模型依每根杆「此時此刻應有的用電」比對實際用電，偏離過大時發出警報，並優先處理人流多的地點。</p>
+        </div>
+        <a class="btn" href="#alarms">檢視警報 <span aria-hidden="true">›</span></a>
+      </div>
+      <div class="kpis" id="ov-kpis"></div>
+      <p class="note" id="ov-mode-note"></p>
+      <div class="card">
+        <div class="card-h">
+          <div><h2>每日警報</h2><p>單杆警報與全區同步異常的每日件數</p></div>
+          <div class="seg" role="group" aria-label="圖表範圍" id="ov-range"></div>
+        </div>
+        <div class="legend"><span><i class="blk" style="background:var(--c-single)"></i>單杆警報</span><span><i class="blk" style="background:var(--c-fleet)"></i>全區同步異常</span></div>
+        <div class="chart" id="ov-daily"></div>
+        <p class="note" id="ov-daily-note"></p>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-h"><div><h2>優先處理</h2><p>依優先度分數排序（嚴重度 × 人流），最多五件</p></div><button class="link" data-go="alarms">全部警報 →</button></div>
+          <div class="tbl-wrap"><table id="ov-priority"></table></div>
+        </div>
+        <div class="card map-wrap">
+          <div class="card-h"><div><h2>杆位分佈</h2><p>依實際經緯度繪製，顏色為本期最高警報等級</p></div></div>
+          <div class="map" id="ov-map"></div>
+          <div class="legend"><span><i class="blk" style="background:var(--crit)"></i>CRITICAL</span><span><i class="blk" style="background:var(--high)"></i>HIGH</span><span><i class="blk" style="background:var(--med)"></i>MEDIUM</span><span><i class="blk" style="background:var(--ok)"></i>無警報</span></div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-h"><div><h2>全區同步異常</h2><p>3 根以上同時偏離，較可能是停電、排程調整等全區因素</p></div></div>
+          <div class="list" id="ov-fleet"></div>
+        </div>
+        <div class="card">
+          <div class="card-h"><div><h2>電表斷訊</h2><p>連續 1 小時以上沒有資料；模型無法打分，需現場確認</p></div></div>
+          <div class="list" id="ov-outage"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 杆體 -->
+    <section class="page" id="page-poles" hidden>
+      <div class="head"><div><h1>杆體</h1><p class="sub">9 根智慧杆的設備配置、正常用電水準與本期警報。點選任一杆查看實際用電與模型預期。</p></div></div>
+      <div class="card">
+        <div class="tbl-wrap"><table id="poles-table"></table></div>
+        <p class="note">SP-03 因路燈、看板、智慧指標迴路整期 0W 已排除。白天 / 夜間功率為訓練期（1/1–1/25）中位數。</p>
+      </div>
+    </section>
+
+    <!-- 3 警報 -->
+    <section class="page" id="page-alarms" hidden>
+      <div class="head"><div><h1>警報</h1><p class="sub">依杆號、類型與等級篩選。點選一筆進入調查面板。</p></div></div>
+      <div class="card">
+        <div class="filters">
+          <label class="field">杆號<select id="f-pole"></select></label>
+          <label class="field">類型<select id="f-type"><option value="">全部</option><option>模型警報</option><option>全區同步異常</option><option>電表斷訊</option></select></label>
+          <label class="field">等級<select id="f-sev"><option value="">全部</option><option value="crit">CRITICAL</option><option value="high">HIGH</option><option value="med">MEDIUM</option></select></label>
+          <label class="field">日期<input type="date" id="f-date"></label>
+          <button class="link" id="f-clear">清除篩選</button>
+        </div>
+        <div class="counts" id="alarm-counts"></div>
+        <div class="tbl-wrap"><table id="alarm-table"></table></div>
+      </div>
+    </section>
+
+    <!-- 4 模型驗證 -->
+    <section class="page" id="page-model" hidden>
+      <div class="head"><div><h1>模型驗證</h1><p class="sub">在測試期注入已知的模擬異常，量測模型抓得到多少、正常時段誤報多少。閾值只用校準期決定，測試期全程未參與訓練。</p></div></div>
+      <div class="kpis" id="m-kpis"></div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-h"><div><h2>各類異常的偵測率</h2><p>事件內任一時段超過閾值即算抓到；每格 4 個事件</p></div><div class="seg" role="group" aria-label="測試集" id="m-set"></div></div>
+          <div class="tbl-wrap"><table class="heat" id="m-heat"></table></div>
+          <p class="note" id="m-heat-note"></p>
+        </div>
+        <div class="card">
+          <div class="card-h"><div><h2>凍結迴路分支有沒有造成遺忘</h2><p>1–2 月測試期，fine-tune 前後的偵測能力</p></div></div>
+          <div class="tbl-wrap"><table id="m-forget"></table></div>
+          <p class="note">迴路分支在第二階段完全凍結，重建誤差不變；杆體分支轉去適應 5–6 月，因此 1–2 月的杆體誤差略升，但整體偵測率沒有下降。</p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-h"><div><h2>打分方式比較</h2><p>5–6 月測試期</p></div></div>
+          <div class="tbl-wrap"><table id="m-scoring"></table></div>
+          <p class="note">平均法會讓單一特徵的異常被其他特徵稀釋；逐杆逐特徵正規化後取最大值，偵測率提升而誤報率維持在 1% 以內。</p>
+        </div>
+        <div class="card">
+          <div class="card-h"><div><h2>目前的限制</h2></div></div>
+          <div class="callout"><ul id="m-limits"></ul></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 方法 -->
+    <section class="page" id="page-method" hidden>
+      <div class="head"><div><h1>方法</h1><p class="sub">從原始電表、路燈、人流資料到警報清單的完整流程。</p></div></div>
+      <div class="card">
+        <h2>處理流程</h2>
+        <ol class="steps">
+          <li><div><b>資料串接</b><p>以杆號為共同鍵，合併電表（迴路明細 / 杆體總量）、路燈控制器、攝影機人流，整理成每杆每 15 分鐘一列。修正 -20 型電表 1/2–1/22 讀值放大 100 倍的問題；確認 MP 迴路即總電源，杆體總功率直接用 MP。</p></div></li>
+          <li><div><b>時間切分與統計標籤</b><p>依時間順序切成訓練 / 校準 / 測試段。以「每杆 × 每小時 × 上班日或休息日」的中位數與 MAD 為基準，扣除全區同步偏移後，偏離超過 4 倍 MAD 且持續 30 分鐘以上的時段排除在訓練之外。</p></div></li>
+          <li><div><b>特徵工程</b><p>功率逐杆 robust 標準化；電壓扣除全區平均；加入燈控亮度與路燈功率的落差、未計量用電、時間與節日編碼。正規化參數只用訓練段計算。</p></div></li>
+          <li><div><b>雙分支 LSTM-Autoencoder</b><p>迴路分支重建各迴路用電；杆體分支重建杆體總功率，並從杆體訊號推估各迴路組成。兩個解碼器都輸入時間與路燈亮度，模型知道此刻該不該亮燈。</p></div></li>
+          <li><div><b>兩階段訓練</b><p>階段一用 1 月資料訓練全部模組。階段二凍結迴路分支，只用 5 月資料 fine-tune 杆體分支，讓模型適應路燈改為調光後的新用電型態。</p></div></li>
+          <li><div><b>打分與警報</b><p>每個特徵的重建誤差除以該杆在校準期的第 99 百分位誤差，取最大值為異常分數；超過校準期第 99 百分位即警報。3 根以上同時警報合併為全區同步異常，優先度 = 嚴重度 × (1 + 人流係數)。</p></div></li>
+        </ol>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><h2>資料切分</h2><p>依時間順序切分，測試段不參與訓練與閾值設定</p></div></div>
+        <div class="timeline" id="tl"></div>
+        <div class="legend"><span><i class="blk" style="background:var(--navy-soft);border:1px solid var(--rule)"></i>訓練</span><span><i class="blk" style="background:var(--med-soft);border:1px solid var(--rule)"></i>校準（定閾值）</span><span><i class="blk" style="background:var(--crit-soft);border:1px solid var(--rule)"></i>測試</span></div>
+      </div>
+      <div class="card">
+        <h2>模型架構</h2>
+        <pre class="mermaid">
+flowchart LR
+  subgraph IN[輸入 · 24 小時視窗]
+    P[杆體特徵<br/>總功率 · 電壓偏差]
+    C[迴路特徵<br/>看板 · 路燈 · 攝影機 · 指標 · 網路 · 未計量]
+    K[條件<br/>時間 · 節日 · 路燈亮度]
+  end
+  P --> EP[杆體編碼器 LSTM]
+  C --> EC[迴路編碼器 LSTM]
+  EP --> ZP((z_p))
+  EC --> ZC((z_c))
+  ZP --> DP[杆體解碼器] --> OP[重建杆體特徵]
+  ZP --> DT[迴路推估解碼器] --> OT[從總量推估迴路]
+  ZC --> DC[迴路解碼器] --> OC[重建迴路特徵]
+  K -.-> DP
+  K -.-> DT
+  K -.-> DC
+  classDef frozen fill:#e6edf7,stroke:#16305a
+  class EC,DC,DT,ZC frozen
+</pre>
+        <p class="note">藍底模組在第二階段凍結；5–6 月沒有迴路資料，推論時只使用杆體分支。</p>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="drawer-bg" id="drawer-bg" hidden></div>
+<aside class="drawer" id="drawer" hidden role="dialog" aria-modal="true" aria-labelledby="dr-title">
+  <div class="drawer-h">
+    <div class="row">
+      <div><span class="eyebrow" id="dr-eyebrow">調查面板</span><h2 id="dr-title">—</h2></div>
+      <button class="x" id="dr-close" aria-label="關閉">✕</button>
+    </div>
+    <div class="tabs" role="tablist" id="dr-tabs"></div>
+  </div>
+  <div class="drawer-b" id="dr-body"></div>
+</aside>
+
+<script>
+(() => {
+"use strict";
+const PAGES = { overview: "總覽", poles: "杆體", alarms: "警報", model: "模型驗證", method: "方法" };
+const KIND_NAMES = { spike: "突增", dropout: "斷電 / 跳脫", level_shift: "水準位移", drift: "緩慢漂移",
+  lamp_on_day: "白天燈控關燈卻耗電", lamp_off_night: "夜間燈控亮燈卻沒耗電", camera_dead: "攝影機歸零", signage_stuck: "看板夜間未關" };
+const STEP = 15 * 60 * 1000;
+let D = null;
+const S = { period: "2026-06", page: "overview", range: "all", mset: "B", sort: { key: "priority", dir: -1 } };
+try { const p = localStorage.getItem("pw-period"); if (p) S.period = p; } catch (e) {}
+
+const $ = (s, el = document) => el.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const P = () => D.periods[S.period];
+const pad = n => String(n).padStart(2, "0");
+const fmtDT = d => `${d.getMonth() + 1}/${d.getDate()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+const fmtD = d => `${d.getMonth() + 1}/${d.getDate()}`;
+const parseT = s => new Date(s);
+const short = id => id.replace("SCCP-", "");
+const pct = (v, nd = 1) => v == null ? "—" : (v * 100).toFixed(nd) + "%";
+
+function level(sev) {
+  if (sev == null) return null;
+  if (sev >= 3) return ["CRITICAL", "crit"];
+  if (sev >= 1.8) return ["HIGH", "high"];
+  return ["MEDIUM", "med"];
+}
+function sevPill(a) {
+  if (a.type === "電表斷訊") return `<span class="sev out">斷訊</span>`;
+  if (a.type === "全區同步異常") return `<span class="sev fleet">全區同步</span>`;
+  const [t, c] = level(a.severity);
+  return `<span class="sev ${c}">${t}</span>`;
+}
+function tIndex(t) { return Math.round((t - parseT(P().t0)) / STEP); }
+
+/* ---------- chart primitives (SVG) ---------- */
+function niceTicks(lo, hi, n = 4) {
+  if (!(hi > lo)) { hi = lo + 1; }
+  const span = hi - lo, step0 = span / n, mag = Math.pow(10, Math.floor(Math.log10(step0)));
+  const step = [1, 2, 2.5, 5, 10].map(m => m * mag).find(s => s >= step0);
+  const out = []; for (let v = Math.ceil(lo / step) * step; v <= hi + 1e-9; v += step) out.push(+v.toFixed(6));
+  return out;
+}
+function timeTicks(t0, t1, maxN = 7) {
+  const hours = (t1 - t0) / 3600000;
+  const opts = [1, 3, 6, 12, 24, 48, 72, 96, 168];
+  const stepH = opts.find(h => hours / h <= maxN) || 168;
+  const d = new Date(t0); d.setMinutes(0, 0, 0);
+  if (stepH >= 24) d.setHours(0); else d.setHours(Math.ceil(d.getHours() / stepH) * stepH);
+  const out = [];
+  while (d.getTime() <= t1) { if (d.getTime() >= t0) out.push(new Date(d)); d.setHours(d.getHours() + stepH); }
+  return { ticks: out, daily: stepH >= 24 };
+}
+
+function lineChart(el, cfg) {
+  // cfg: { t0, n, series:[{key,label,values,color,width,dash,area}], bands:[{i0,i1,color}], height, yFmt, unit, threshold }
+  const W = Math.max(el.clientWidth || 600, 280), H = cfg.height || 240, m = { l: 46, r: 12, t: 10, b: 26 };
+  const iw = W - m.l - m.r, ih = H - m.t - m.b, n = cfg.n;
+  let lo = Infinity, hi = -Infinity;
+  cfg.series.forEach(s => s.values.forEach(v => { if (v != null) { lo = Math.min(lo, v); hi = Math.max(hi, v); } }));
+  if (cfg.threshold != null) hi = Math.max(hi, cfg.threshold * 1.15);
+  if (!isFinite(lo)) { lo = 0; hi = 1; }
+  if (cfg.zero !== false) lo = Math.min(lo, 0);
+  const yPad = (hi - lo) * 0.08; hi += yPad; if (cfg.zero === false) lo -= yPad;
+  const yt = niceTicks(lo, hi); lo = Math.min(lo, yt[0]); hi = Math.max(hi, yt[yt.length - 1]);
+  const x = i => m.l + (n <= 1 ? 0 : i / (n - 1) * iw), y = v => m.t + ih - (v - lo) / (hi - lo) * ih;
+  const t0 = cfg.t0, tAt = i => new Date(t0 + i * STEP);
+  let g = "";
+  (cfg.bands || []).forEach(b => { g += `<rect x="${x(Math.max(0, b.i0))}" y="${m.t}" width="${Math.max(2, x(Math.min(n - 1, b.i1)) - x(Math.max(0, b.i0)))}" height="${ih}" fill="${b.color}"/>`; });
+  yt.forEach(v => { g += `<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="${css("--grid")}" stroke-width="1"/><text x="${m.l - 8}" y="${y(v) + 4}" text-anchor="end">${(cfg.yFmt || (a => a))(v)}</text>`; });
+  const tt = timeTicks(t0, t0 + (n - 1) * STEP);
+  tt.ticks.forEach(d => { const i = (d.getTime() - t0) / STEP; g += `<text x="${x(i)}" y="${H - 6}" text-anchor="middle">${tt.daily ? fmtD(d) : pad(d.getHours()) + ":00"}</text><line x1="${x(i)}" x2="${x(i)}" y1="${m.t + ih}" y2="${m.t + ih + 4}" stroke="${css("--axis")}"/>`; });
+  g += `<line x1="${m.l}" x2="${W - m.r}" y1="${m.t + ih}" y2="${m.t + ih}" stroke="${css("--axis")}"/>`;
+  if (cfg.threshold != null) g += `<line x1="${m.l}" x2="${W - m.r}" y1="${y(cfg.threshold)}" y2="${y(cfg.threshold)}" stroke="${css("--crit")}" stroke-width="1.2" opacity=".8"/><text x="${W - m.r}" y="${y(cfg.threshold) - 5}" text-anchor="end" style="fill:${css("--crit")}">閾值</text>`;
+  cfg.series.forEach(s => {
+    let d = "", a = "", open = false, segStart = 0;
+    s.values.forEach((v, i) => {
+      if (v == null) { if (open && s.area) a += `L${x(i - 1)},${y(Math.max(lo, 0))}L${x(segStart)},${y(Math.max(lo, 0))}Z`; open = false; return; }
+      if (!open) { d += `M${x(i)},${y(v)}`; if (s.area) a += `M${x(i)},${y(v)}`; segStart = i; open = true; }
+      else { d += `L${x(i)},${y(v)}`; if (s.area) a += `L${x(i)},${y(v)}`; }
+    });
+    if (open && s.area) a += `L${x(n - 1)},${y(Math.max(lo, 0))}L${x(segStart)},${y(Math.max(lo, 0))}Z`;
+    if (s.area) g += `<path d="${a}" fill="${s.color}" opacity=".10"/>`;
+    g += `<path d="${d}" fill="none" stroke="${s.color}" stroke-width="${s.width || 1.6}" ${s.dash ? `stroke-dasharray="${s.dash}"` : ""} stroke-linejoin="round" stroke-linecap="round"/>`;
+  });
+  g += `<line class="xh" x1="0" x2="0" y1="${m.t}" y2="${m.t + ih}" stroke="${css("--ink-2")}" stroke-width="1" opacity="0"/>`;
+  cfg.series.forEach((s, k) => { g += `<circle class="hp" data-k="${k}" r="3.5" fill="${s.color}" stroke="${css("--surface")}" stroke-width="2" opacity="0"/>`; });
+  g += `<rect class="hit" x="${m.l}" y="${m.t}" width="${iw}" height="${ih}" fill="transparent"/>`;
+  el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" height="${H}" role="img" aria-label="${esc(cfg.label || "時序圖")}">${g}</svg><div class="tip" hidden></div>`;
+  const svg = $("svg", el), tip = $(".tip", el), xh = $(".xh", el), hps = el.querySelectorAll(".hp");
+  const move = ev => {
+    const r = svg.getBoundingClientRect(), px = (ev.clientX - r.left) * (W / r.width);
+    const i = Math.max(0, Math.min(n - 1, Math.round((px - m.l) / iw * (n - 1))));
+    xh.setAttribute("x1", x(i)); xh.setAttribute("x2", x(i)); xh.setAttribute("opacity", ".4");
+    let rows = "";
+    cfg.series.forEach((s, k) => {
+      const v = s.values[i], hp = hps[k];
+      if (v == null) { hp.setAttribute("opacity", "0"); } else { hp.setAttribute("cx", x(i)); hp.setAttribute("cy", y(v)); hp.setAttribute("opacity", "1"); }
+      rows += `<div class="row"><i style="background:${s.color}"></i><span>${esc(s.label)}</span><span>${v == null ? "—" : (cfg.tipFmt || cfg.yFmt || (a => a))(v)}${cfg.unit || ""}</span></div>`;
+    });
+    tip.innerHTML = `<b>${fmtDT(tAt(i))}</b>${rows}`;
+    tip.hidden = false;
+    const tx = x(i) / W * r.width;
+    tip.style.left = Math.min(r.width - tip.offsetWidth - 4, Math.max(0, tx + 12)) + "px";
+    tip.style.top = "6px";
+  };
+  const hit = $(".hit", el);
+  hit.addEventListener("pointermove", move);
+  hit.addEventListener("pointerleave", () => { tip.hidden = true; xh.setAttribute("opacity", "0"); hps.forEach(h => h.setAttribute("opacity", "0")); });
+}
+
+function barChart(el, cfg) {
+  // cfg: { labels:[Date], stacks:[{label,color,values}], height }
+  const W = Math.max(el.clientWidth || 600, 280), H = cfg.height || 220, m = { l: 34, r: 8, t: 10, b: 26 };
+  const iw = W - m.l - m.r, ih = H - m.t - m.b, n = cfg.labels.length;
+  const tot = cfg.labels.map((_, i) => cfg.stacks.reduce((a, s) => a + (s.values[i] || 0), 0));
+  const yt = niceTicks(0, Math.max(4, ...tot)), hi = yt[yt.length - 1];
+  const bw = iw / n, gap = Math.min(4, bw * 0.25), y = v => m.t + ih - v / hi * ih;
+  let g = "";
+  yt.forEach(v => { g += `<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="${css("--grid")}"/><text x="${m.l - 8}" y="${y(v) + 4}" text-anchor="end">${v}</text>`; });
+  cfg.labels.forEach((d, i) => {
+    let acc = 0; const x0 = m.l + i * bw + gap / 2, w = Math.max(1, bw - gap);
+    cfg.stacks.forEach((s, k) => {
+      const v = s.values[i] || 0; if (!v) return;
+      const top = acc + v, isTop = cfg.stacks.slice(k + 1).every(ss => !(ss.values[i] || 0));
+      const h = y(acc) - y(top) - (acc > 0 ? 2 : 0);
+      const r = isTop ? Math.min(4, w / 2) : 0, yy = y(top), xx = x0;
+      g += r ? `<path d="M${xx},${yy + h}V${yy + r}Q${xx},${yy} ${xx + r},${yy}H${xx + w - r}Q${xx + w},${yy} ${xx + w},${yy + r}V${yy + h}Z" fill="${s.color}"/>` : `<rect x="${xx}" y="${yy}" width="${w}" height="${Math.max(0, h)}" fill="${s.color}"/>`;
+      acc = top;
+    });
+    const every = Math.ceil(n / 8);
+    if (i % every === 0) g += `<text x="${x0 + w / 2}" y="${H - 6}" text-anchor="middle">${fmtD(d)}</text>`;
+  });
+  g += `<line x1="${m.l}" x2="${W - m.r}" y1="${m.t + ih}" y2="${m.t + ih}" stroke="${css("--axis")}"/>`;
+  g += `<rect class="hl" x="0" y="${m.t}" width="${bw}" height="${ih}" fill="${css("--ink")}" opacity="0"/>`;
+  g += `<rect class="hit" x="${m.l}" y="${m.t}" width="${iw}" height="${ih}" fill="transparent"/>`;
+  el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" height="${H}" role="img" aria-label="${esc(cfg.label || "長條圖")}">${g}</svg><div class="tip" hidden></div>`;
+  const svg = $("svg", el), tip = $(".tip", el), hl = $(".hl", el), hit = $(".hit", el);
+  hit.addEventListener("pointermove", ev => {
+    const r = svg.getBoundingClientRect(), px = (ev.clientX - r.left) * (W / r.width);
+    const i = Math.max(0, Math.min(n - 1, Math.floor((px - m.l) / bw)));
+    hl.setAttribute("x", m.l + i * bw); hl.setAttribute("opacity", ".05");
+    tip.innerHTML = `<b>${fmtD(cfg.labels[i])}（${"日一二三四五六"[cfg.labels[i].getDay()]}）</b>` + cfg.stacks.map(s => `<div class="row"><i style="background:${s.color}"></i><span>${s.label}</span><span>${s.values[i] || 0}</span></div>`).join("") + (cfg.extra ? cfg.extra(i) : "");
+    tip.hidden = false;
+    const tx = (m.l + i * bw + bw) / W * r.width;
+    tip.style.left = Math.min(r.width - tip.offsetWidth - 4, tx + 6) + "px"; tip.style.top = "6px";
+    if (cfg.onHover) cfg.onHover(i);
+  });
+  hit.addEventListener("pointerleave", () => { tip.hidden = true; hl.setAttribute("opacity", "0"); });
+  if (cfg.onClick) hit.addEventListener("click", ev => {
+    const r = svg.getBoundingClientRect(), px = (ev.clientX - r.left) * (W / r.width);
+    cfg.onClick(Math.max(0, Math.min(n - 1, Math.floor((px - m.l) / bw))));
+  });
+}
+
+/* ---------- shell ---------- */
+function renderPeriodSeg() {
+  $("#period-seg").innerHTML = Object.entries(D.periods).map(([k, p]) =>
+    `<button aria-pressed="${k === S.period}" data-period="${k}">${p.label}${p.mode === "with_circuit" ? " · 含迴路" : ""}</button>`).join("");
+  const p = P();
+  $("#data-status").innerHTML = `<span class="dot"></span>${fmtD(parseT(p.start))}–${fmtD(new Date(parseT(p.end) - 86400000))} · 閾值校準於 ${p.calibrated_on}`;
+}
+function go(page) {
+  if (!PAGES[page]) page = "overview";
+  S.page = page;
+  document.querySelectorAll(".page").forEach(s => s.hidden = s.id !== "page-" + page);
+  document.querySelectorAll(".nav a").forEach(a => { if (a.dataset.page === page) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+  $("#crumb-page").textContent = PAGES[page];
+  render();
+}
+function render() {
+  renderPeriodSeg();
+  ({ overview: renderOverview, poles: renderPoles, alarms: renderAlarms, model: renderModel, method: renderMethod })[S.page]();
+}
+
+/* ---------- 1 overview ---------- */
+function poleWorst(p) {
+  const rank = { crit: 3, high: 2, med: 1 };
+  let best = 0;
+  P().alarms.forEach(a => { if (a.type === "模型警報" && a.pole === p) best = Math.max(best, rank[level(a.severity)[1]]); });
+  return ["ok", "med", "high", "crit"][best];
+}
+function renderOverview() {
+  const p = P(), s = p.summary, m = D.metrics;
+  const outageH = p.alarms.filter(a => a.type === "電表斷訊").reduce((t, a) => t + a.hours, 0);
+  const isB = p.mode === "pole_only", test = isB ? m.B : m.A2;
+  $("#ov-kpis").innerHTML = `
+    <div class="kpi hero"><span class="l">單杆警報</span><span class="v num">${s.single}<small>件</small></span><span class="d">平均每杆每週 ${s.per_pole_week} 件</span></div>
+    <div class="kpi"><span class="l">全區同步異常</span><span class="v num">${s.fleet}<small>件</small></span><span class="d">3 根以上同時偏離，已合併</span></div>
+    <div class="kpi"><span class="l">電表斷訊</span><span class="v num">${s.outage}<small>件</small></span><span class="d">共 ${outageH.toFixed(0)} 小時無資料</span></div>
+    <div class="kpi"><span class="l">警報時段比例</span><span class="v num">${s.alarm_share.toFixed(2)}<small>%</small></span><span class="d">所有杆 × 15 分鐘時段</span></div>
+    <div class="kpi"><span class="l">模型誤報率</span><span class="v num">${(test.fpr * 100).toFixed(1)}<small>%</small></span><span class="d">測試期 · 偵測率 ${pct(test.event_recall, 0)}</span></div>`;
+  $("#ov-mode-note").textContent = isB
+    ? "本期只有杆體總功率（無迴路明細），使用最終模型的杆體分支。誤報率與偵測率來自 6 月測試期注入模擬異常的驗證。"
+    : "本期有迴路明細，同時使用杆體與迴路分支。此期間包含春節連假與 2 月下旬的看板設定調整，警報偏多；誤報率與偵測率來自 2 月測試期的驗證。";
+  const ranges = [["7", "7D"], ["14", "14D"], ["all", "全期"]];
+  $("#ov-range").innerHTML = ranges.map(([k, l]) => `<button aria-pressed="${S.range === k}" data-range="${k}">${l}</button>`).join("");
+  let daily = p.daily; if (S.range !== "all") daily = daily.slice(-(+S.range));
+  barChart($("#ov-daily"), {
+    labels: daily.map(d => new Date(d.date + "T00:00:00")), height: 220, label: "每日警報件數",
+    stacks: [{ label: "單杆警報", color: css("--c-single"), values: daily.map(d => d.single) }, { label: "全區同步異常", color: css("--c-fleet"), values: daily.map(d => d.fleet) }],
+    extra: i => `<div class="row"><i style="background:transparent"></i><span>警報時段比例</span><span>${daily[i].alarm_share}%</span></div>`,
+    onClick: i => { $("#f-date").value = daily[i].date; location.hash = "alarms"; }
+  });
+  const top = p.daily.reduce((a, d) => d.single + d.fleet > a.single + a.fleet ? d : a, p.daily[0]);
+  $("#ov-daily-note").textContent = `警報最多的一天是 ${fmtD(new Date(top.date + "T00:00:00"))}（單杆 ${top.single} 件、全區 ${top.fleet} 件）。點選長條可篩選當天警報。`;
+
+  const pri = p.alarms.filter(a => a.type === "模型警報").sort((a, b) => b.priority - a.priority).slice(0, 5);
+  $("#ov-priority").innerHTML = `<thead><tr><th>杆</th><th>時間</th><th>等級</th><th>最可疑特徵</th><th class="num">人流</th><th class="num">優先度</th></tr></thead><tbody>` +
+    (pri.length ? pri.map(a => `<tr data-alarm="${a.id}"><td><span class="pole-tag">${short(a.pole)}</span></td><td class="num">${fmtDT(parseT(a.start))}</td><td>${sevPill(a)}</td><td>${esc(a.feature)}</td><td class="num">${a.people ?? "—"}</td><td class="num mono">${a.priority.toFixed(2)}</td></tr>`).join("") : `<tr><td colspan="6" class="empty">本期沒有單杆警報</td></tr>`) + `</tbody>`;
+  renderMap();
+  const li = a => `<button class="li" data-alarm="${a.id}">${sevPill(a)}<span class="t"><b>${esc(a.type === "全區同步異常" ? a.pole : short(a.pole))}</b><span>${fmtDT(parseT(a.start))} 起 · ${a.hours} 小時${a.feature ? " · " + esc(a.feature) : ""}</span></span><span class="arrow">→</span></button>`;
+  const fleet = p.alarms.filter(a => a.type === "全區同步異常").sort((a, b) => b.severity - a.severity);
+  $("#ov-fleet").innerHTML = fleet.length ? fleet.slice(0, 5).map(li).join("") + (fleet.length > 5 ? `<p class="note" style="padding-top:8px">另有 ${fleet.length - 5} 件，見警報頁。</p>` : "") : `<p class="empty">本期沒有全區同步異常</p>`;
+  const out = p.alarms.filter(a => a.type === "電表斷訊").sort((a, b) => b.hours - a.hours);
+  $("#ov-outage").innerHTML = out.length ? out.map(li).join("") : `<p class="empty">本期沒有斷訊</p>`;
+}
+function renderMap() {
+  const W = 520, H = 300, pd = 38, ps = D.poles;
+  const lons = ps.map(p => p.lon), lats = ps.map(p => p.lat);
+  const [x0, x1, y0, y1] = [Math.min(...lons), Math.max(...lons), Math.min(...lats), Math.max(...lats)];
+  const k = Math.min((W - 2 * pd) / (x1 - x0), (H - 2 * pd) / ((y1 - y0) * 1.1));
+  const cx = (W - (x1 - x0) * k) / 2, cy = (H - (y1 - y0) * 1.1 * k) / 2;
+  const X = lon => cx + (lon - x0) * k, Y = lat => H - cy - (lat - y0) * 1.1 * k;
+  const colors = { crit: css("--crit"), high: css("--high"), med: css("--med"), ok: css("--ok") };
+  const outs = new Set(P().alarms.filter(a => a.type === "電表斷訊").map(a => a.pole));
+  let g = "";
+  for (let i = 1; i < 6; i++) { g += `<line x1="0" x2="${W}" y1="${i * H / 6}" y2="${i * H / 6}" stroke="${css("--grid")}"/><line y1="0" y2="${H}" x1="${i * W / 6}" x2="${i * W / 6}" stroke="${css("--grid")}"/>`; }
+  const mPerDeg = 111000 * Math.cos(25.04 * Math.PI / 180), bar = 100 / mPerDeg * k;
+  g += `<line x1="16" x2="${16 + bar}" y1="${H - 16}" y2="${H - 16}" stroke="${css("--ink-2")}" stroke-width="2"/><text x="16" y="${H - 22}">100 m</text>`;
+  ps.forEach(p => {
+    const st = poleWorst(p.id), x = X(p.lon), y = Y(p.lat);
+    g += `<g class="pt" data-pole="${p.id}" tabindex="0" role="button" aria-label="${p.short}">
+      ${outs.has(p.id) ? `<circle cx="${x}" cy="${y}" r="13" fill="none" stroke="${css("--out")}" stroke-width="1.5" stroke-dasharray="3 3"/>` : ""}
+      <circle cx="${x}" cy="${y}" r="8" fill="${colors[st]}" stroke="${css("--surface")}" stroke-width="2.5"/>
+      <text x="${x + 13}" y="${y + 4}">${p.short.replace("SP-", "")}</text></g>`;
+  });
+  $("#ov-map").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="杆位分佈圖">${g}</svg>`;
+  $("#ov-map").insertAdjacentHTML("beforeend", outs.size ? `<p class="note">虛線外圈 = 本期有電表斷訊</p>` : "");
+}
+
+/* ---------- 2 poles ---------- */
+function renderPoles() {
+  const p = P();
+  const rows = D.poles.map(pl => {
+    const al = p.alarms.filter(a => a.type === "模型警報" && a.pole === pl.id);
+    const out = p.alarms.filter(a => a.type === "電表斷訊" && a.pole === pl.id).reduce((t, a) => t + a.hours, 0);
+    const fleet = p.alarms.filter(a => a.type === "全區同步異常" && a.pole.split("、").includes(pl.short)).length;
+    const worst = poleWorst(pl.id);
+    return { pl, n: al.length, out, fleet, worst };
+  });
+  const maxN = Math.max(1, ...rows.map(r => r.n));
+  $("#poles-table").innerHTML = `<thead><tr><th>杆</th><th>狀態</th><th class="num">單杆警報</th><th class="num">參與全區事件</th><th class="num">斷訊（小時）</th><th class="num">白天 / 夜間功率</th><th>電表</th><th>分迴路</th></tr></thead><tbody>` +
+    rows.map(r => `<tr data-pole="${r.pl.id}">
+      <td><span class="pole-tag">${r.pl.short}</span></td>
+      <td>${r.worst === "ok" ? `<span class="sev ok">正常</span>` : `<span class="sev ${r.worst}">${{ crit: "CRITICAL", high: "HIGH", med: "MEDIUM" }[r.worst]}</span>`}</td>
+      <td class="num"><span class="bar-mini" style="width:${r.n / maxN * 48}px;background:var(--c-single)"></span>${r.n}</td>
+      <td class="num">${r.fleet}</td><td class="num">${r.out ? r.out.toFixed(1) : "—"}</td>
+      <td class="num mono">${r.pl.day_w} / ${r.pl.night_w} W</td><td>${r.pl.meter_model}</td>
+      <td>${r.pl.circuits.map(c => `<span class="chip">${c}</span>`).join("")}</td></tr>`).join("") + `</tbody>`;
+}
+
+/* ---------- 3 alarms ---------- */
+function filteredAlarms() {
+  const fp = $("#f-pole").value, ft = $("#f-type").value, fs = $("#f-sev").value, fd = $("#f-date").value;
+  return P().alarms.filter(a => {
+    if (fp && !(a.pole === fp || (a.type === "全區同步異常" && a.pole.split("、").includes(short(fp))))) return false;
+    if (ft && a.type !== ft) return false;
+    if (fs && !(a.type === "模型警報" && level(a.severity)[1] === fs)) return false;
+    if (fd && a.start.slice(0, 10) !== fd && !(a.start.slice(0, 10) <= fd && a.end.slice(0, 10) >= fd)) return false;
+    return true;
+  });
+}
+function renderAlarms() {
+  const sel = $("#f-pole"), cur = sel.value;
+  sel.innerHTML = `<option value="">全部</option>` + D.poles.map(p => `<option value="${p.id}">${p.short}</option>`).join("");
+  sel.value = cur;
+  const p = P(); $("#f-date").min = p.start; $("#f-date").max = new Date(parseT(p.end) - 86400000).toISOString().slice(0, 10);
+  const list = filteredAlarms();
+  const key = S.sort.key, dir = S.sort.dir;
+  list.sort((a, b) => {
+    const va = key === "start" ? a.start : key === "severity" ? (a.severity ?? -1) : key === "hours" ? a.hours : (a.priority ?? (a.type === "全區同步異常" ? a.severity : -1));
+    const vb = key === "start" ? b.start : key === "severity" ? (b.severity ?? -1) : key === "hours" ? b.hours : (b.priority ?? (b.type === "全區同步異常" ? b.severity : -1));
+    return (va > vb ? 1 : va < vb ? -1 : 0) * dir;
+  });
+  const c = t => list.filter(a => a.type === t).length;
+  $("#alarm-counts").innerHTML = `<span class="pill">顯示 ${list.length} 件</span><span class="pill">單杆 ${c("模型警報")}</span><span class="pill">全區同步 ${c("全區同步異常")}</span><span class="pill">斷訊 ${c("電表斷訊")}</span>`;
+  const th = (k, l, num) => `<th class="${num ? "num" : ""}"><button data-sort="${k}">${l}${S.sort.key === k ? (S.sort.dir < 0 ? " ↓" : " ↑") : ""}</button></th>`;
+  $("#alarm-table").innerHTML = `<thead><tr>${th("start", "開始時間")}<th>杆</th><th>類型</th><th>等級</th><th>最可疑特徵</th>${th("hours", "持續（小時）", 1)}${th("severity", "嚴重度", 1)}${th("priority", "優先度", 1)}</tr></thead><tbody>` +
+    (list.length ? list.slice(0, 300).map(a => `<tr data-alarm="${a.id}"><td class="num">${fmtDT(parseT(a.start))}</td><td>${a.type === "全區同步異常" ? `<span class="chip">${a.pole.split("、").length} 根杆</span>` : `<span class="pole-tag">${short(a.pole)}</span>`}</td><td>${a.type}</td><td>${sevPill(a)}</td><td>${esc(a.feature || "—")}</td><td class="num">${a.hours}</td><td class="num mono">${a.severity != null ? a.severity.toFixed(2) : "—"}</td><td class="num mono">${a.priority != null ? a.priority.toFixed(2) : "—"}</td></tr>`).join("") : `<tr><td colspan="8" class="empty">沒有符合條件的警報</td></tr>`) + `</tbody>`;
+}
+
+/* ---------- 4 model ---------- */
+function renderModel() {
+  const m = D.metrics, b = m.B, a = m.A2;
+  $("#m-kpis").innerHTML = `
+    <div class="kpi hero"><span class="l">6 月測試期 · 誤報率</span><span class="v num">${(b.fpr * 100).toFixed(1)}<small>%</small></span><span class="d">正常時段被判異常的比例 · 每杆每週 ${b.false_alarm_events_per_pole_week.toFixed(1)} 次</span></div>
+    <div class="kpi"><span class="l">6 月 · 異常事件偵測率</span><span class="v num">${(b.event_recall * 100).toFixed(0)}<small>%</small></span><span class="d">僅杆體總功率可用</span></div>
+    <div class="kpi"><span class="l">6 月 · AUROC</span><span class="v num">${b.auroc.toFixed(2)}</span><span class="d">不依賴閾值的排序能力</span></div>
+    <div class="kpi"><span class="l">2 月測試期 · 偵測率</span><span class="v num">${(a.event_recall * 100).toFixed(0)}<small>%</small></span><span class="d">含迴路明細 · AUROC ${a.auroc.toFixed(2)}</span></div>
+    <div class="kpi"><span class="l">2 月 · 誤報率</span><span class="v num">${(a.fpr * 100).toFixed(1)}<small>%</small></span><span class="d">春節與看板設定調整造成漂移</span></div>`;
+  $("#m-set").innerHTML = [["B", "6 月"], ["A2", "2 月"]].map(([k, l]) => `<button aria-pressed="${S.mset === k}" data-mset="${k}">${l}</button>`).join("");
+  const rec = m.recall[S.mset], mags = [["small", "小"], ["medium", "中"], ["large", "大"]];
+  const cellColor = v => v == null ? "transparent" : `color-mix(in srgb, var(--c-actual) ${Math.round(8 + v * 0.8)}%, var(--surface))`;
+  $("#m-heat").innerHTML = `<thead><tr><th></th>${mags.map(([_, l]) => `<th>幅度${l}</th>`).join("")}</tr></thead><tbody>` +
+    Object.keys(KIND_NAMES).filter(k => rec[k]).map(k => `<tr><td class="kind" title="${esc(m.kinds[k] || "")}">${KIND_NAMES[k]}</td>${mags.map(([g]) => { const v = rec[k][g]; return `<td class="cell" style="background:${cellColor(v)};color:${v >= 60 ? "#fff" : "var(--ink)"}">${v == null ? "—" : v + "%"}</td>`; }).join("")}</tr>`).join("") + `</tbody>`;
+  $("#m-heat-note").textContent = S.mset === "B" ? "5–6 月路燈已調光到約 18%，一盞燈只耗約 5W，混在總功率中幾乎看不出來；此期間也沒有迴路資料。" : "2 月有迴路明細，攝影機歸零、看板未關這類只影響單一迴路的異常也抓得到。";
+  const a1 = m.A1, t2 = m.training.stage2;
+  $("#m-forget").innerHTML = `<thead><tr><th></th><th class="num">階段一</th><th class="num">階段二（fine-tune 後）</th></tr></thead><tbody>
+    <tr><td>事件偵測率</td><td class="num mono">${pct(a1.event_recall, 0)}</td><td class="num mono">${pct(a.event_recall, 0)}</td></tr>
+    <tr><td>AUROC</td><td class="num mono">${a1.auroc.toFixed(3)}</td><td class="num mono">${a.auroc.toFixed(3)}</td></tr>
+    <tr><td>迴路重建誤差（1 月底校準期）</td><td class="num mono">${t2.a_cal_before.circ.toFixed(4)}</td><td class="num mono">${t2.a_cal_after.circ.toFixed(4)}</td></tr>
+    <tr><td>杆體重建誤差（1 月底校準期）</td><td class="num mono">${t2.a_cal_before.pole.toFixed(4)}</td><td class="num mono">${t2.a_cal_after.pole.toFixed(4)}</td></tr></tbody>`;
+  const mb = m.mean_scoring_B;
+  $("#m-scoring").innerHTML = `<thead><tr><th></th><th class="num">平均法</th><th class="num">逐特徵正規化取最大值</th></tr></thead><tbody>
+    <tr><td>誤報率</td><td class="num mono">${pct(mb.fpr)}</td><td class="num mono">${pct(b.fpr)}</td></tr>
+    <tr><td>事件偵測率</td><td class="num mono">${pct(mb.event_recall, 0)}</td><td class="num mono">${pct(b.event_recall, 0)}</td></tr>
+    <tr><td>AUROC</td><td class="num mono">${mb.auroc.toFixed(3)}</td><td class="num mono">${b.auroc.toFixed(3)}</td></tr></tbody>`;
+  $("#m-limits").innerHTML = [
+    "沒有真實的故障紀錄，偵測率來自注入的模擬異常；真實警報是否為故障需現場確認。",
+    "5–6 月只有杆體總功率，小幅度與路燈相關的異常偵測率偏低。",
+    "正規化分母下限（0.25）是參考測試期結果選定的，0.1–0.5 間差異不大；後續調參應改用校準期注入異常。",
+    `訓練資料少（階段一 ${m.training.stage1.windows.toLocaleString()} 個 24 小時視窗），訓練約 ${Math.round(m.training.stage1.seconds + t2.seconds)} 秒；超參數尚未調整。`,
+  ].map(s => `<li>${s}</li>`).join("");
+}
+
+/* ---------- 5 method ---------- */
+function renderMethod() {
+  const sp = D.splits, days = (a, b) => (new Date(b) - new Date(a)) / 86400000;
+  const row = (lab, keys) => {
+    const tot = keys.reduce((t, k) => t + days(...sp[k]), 0);
+    return `<div class="tl-row"><span>${lab}</span><div class="tl-bar">${keys.map(k => { const d = days(...sp[k]), cls = k.includes("train") || k.includes("adapt") ? "seg-train" : k.includes("cal") ? "seg-cal" : "seg-test"; return `<div class="${cls}" style="flex:${d}" title="${k} · ${sp[k][0]} 起 ${d} 天">${k} · ${d} 天</div>`; }).join("")}</div></div>`;
+  };
+  $("#tl").innerHTML = row("1–2 月", ["A_train", "A_cal", "A_test"]) + row("5–6 月", ["B_adapt", "B_cal", "B_test"]);
+}
+
+/* ---------- drawer ---------- */
+let DR = null;
+function openDrawer(kind, id) {
+  DR = { kind, id, tab: 0 };
+  $("#drawer").hidden = false; $("#drawer-bg").hidden = false;
+  drawDrawer();
+  $("#dr-close").focus();
+}
+function closeDrawer() { $("#drawer").hidden = true; $("#drawer-bg").hidden = true; DR = null; }
+function drawDrawer() {
+  if (!DR) return;
+  const tabs = DR.kind === "pole" ? ["用電曲線", "警報紀錄", "設備配置"] : alarmTabs(P().alarms.find(a => a.id === DR.id));
+  $("#dr-tabs").innerHTML = tabs.map((t, i) => `<button role="tab" aria-selected="${i === DR.tab}" data-tab="${i}">${t}</button>`).join("");
+  if (DR.kind === "pole") drawPole(); else drawAlarm();
+}
+function alarmTabs(a) { return a.type === "模型警報" ? ["事件摘要", "用電曲線", "特徵貢獻", "周邊情境"] : a.type === "全區同步異常" ? ["事件摘要", "各杆用電"] : ["事件摘要", "用電曲線"]; }
+
+function seriesWindow(pole, i0, i1) {
+  const s = P().series[pole], n = s.actual.length;
+  i0 = Math.max(0, i0); i1 = Math.min(n - 1, i1);
+  const sl = arr => arr ? arr.slice(i0, i1 + 1) : null;
+  return { i0, i1, n: i1 - i0 + 1, t0: parseT(P().t0).getTime() + i0 * STEP, get: k => sl(s[k]) };
+}
+function powerChart(el, pole, i0, i1, band, opts = {}) {
+  const w = seriesWindow(pole, i0, i1);
+  lineChart(el, {
+    t0: w.t0, n: w.n, height: opts.height || 230, unit: " W", yFmt: v => Math.round(v), label: `${short(pole)} 用電`,
+    bands: band ? [{ i0: band[0] - w.i0, i1: band[1] - w.i0, color: css("--c-event") }] : [],
+    series: [{ label: "模型預期", values: w.get(opts.exp || "expected"), color: css("--c-expected"), width: 2.2 },
+             { label: "實際", values: w.get(opts.act || "actual"), color: css("--c-actual"), width: 1.6, area: !opts.act }],
+  });
+}
+function drawAlarm() {
+  const a = P().alarms.find(x => x.id === DR.id), body = $("#dr-body");
+  $("#dr-eyebrow").textContent = `調查面板 · ${a.type}`;
+  $("#dr-title").textContent = `${a.type === "全區同步異常" ? a.pole : short(a.pole)} · ${fmtDT(parseT(a.start))}`;
+  const i0 = tIndex(parseT(a.start)), i1 = tIndex(parseT(a.end)) - 1, ctx = 48;
+  const tab = alarmTabs(a)[DR.tab];
+  if (tab === "事件摘要") {
+    let facts = `<div class="fact"><span class="l">等級</span><span class="v sm">${sevPill(a)}</span></div>
+      <div class="fact"><span class="l">持續時間</span><span class="v num">${a.hours}<small style="font-size:12px;color:var(--muted)"> 小時</small></span></div>`;
+    let text = "";
+    if (a.type === "模型警報") {
+      const w = seriesWindow(a.pole, i0, i1), act = w.get("actual").filter(v => v != null), exp = w.get("expected").filter(v => v != null);
+      const ma = act.reduce((s, v) => s + v, 0) / act.length, me = exp.reduce((s, v) => s + v, 0) / exp.length, d = (ma - me) / Math.max(me, 1) * 100;
+      facts += `<div class="fact"><span class="l">嚴重度（× 閾值）</span><span class="v num">${a.severity.toFixed(2)}</span></div>
+        <div class="fact"><span class="l">平均人流</span><span class="v num">${a.people ?? "—"}</span></div>
+        <div class="fact"><span class="l">優先度分數</span><span class="v num">${a.priority.toFixed(2)}</span></div>
+        <div class="fact"><span class="l">最可疑特徵</span><span class="v sm">${esc(a.feature)}</span></div>`;
+      text = `模型預期 ${short(a.pole)} 在此時段總功率平均約 <b>${me.toFixed(0)} W</b>，實際為 <b>${ma.toFixed(0)} W</b>（${d >= 0 ? "高" : "低"} ${Math.abs(d).toFixed(0)}%）。偏離最大的特徵是「${esc(a.feature)}」，異常分數峰值為閾值的 ${a.severity.toFixed(2)} 倍。`;
+    } else if (a.type === "全區同步異常") {
+      facts += `<div class="fact"><span class="l">涉及杆數</span><span class="v num">${a.pole.split("、").length}</span></div><div class="fact"><span class="l">主要偏離</span><span class="v sm">${esc(a.feature)}</span></div>`;
+      text = `${esc(a.pole)} 在同一時段一起出現「${esc(a.feature)}」。多根杆同時同向偏離，較可能是停電、排程或內容調整等全區因素，建議先確認營運端是否有變更，再判斷是否需要派工。`;
+    } else {
+      text = `${short(a.pole)} 從 ${fmtDT(parseT(a.start))} 到 ${fmtDT(parseT(a.end))} 共 ${a.hours} 小時沒有電表資料。斷訊期間模型無法判斷，需確認通訊或電表狀態。`;
+    }
+    body.innerHTML = `<div class="facts">${facts}</div><p class="explain">${text}</p><div class="card"><h3>${a.type === "全區同步異常" ? a.pole.split("、")[0] + " 事件前後用電（其他杆見「各杆用電」）" : "事件前後用電"}</h3><div class="chart" id="dr-c1"></div><div class="legend"><span><i style="background:var(--c-actual)"></i>實際</span><span><i style="background:var(--c-expected)"></i>模型預期</span><span><i class="blk" style="background:var(--c-event)"></i>事件期間</span></div></div>`;
+    if (a.type !== "全區同步異常") powerChart($("#dr-c1"), a.pole, i0 - ctx, i1 + ctx, [i0, i1]);
+    else powerChart($("#dr-c1"), "SCCP-" + a.pole.split("、")[0], i0 - ctx, i1 + ctx, [i0, i1]);
+  } else if (tab === "用電曲線") {
+    const hasC = P().mode === "with_circuit" && a.type === "模型警報";
+    body.innerHTML = `<div class="card"><h3>杆體總功率（前後 24 小時）</h3><div class="chart" id="dr-c1"></div><div class="legend"><span><i style="background:var(--c-actual)"></i>實際</span><span><i style="background:var(--c-expected)"></i>模型預期</span><span><i class="blk" style="background:var(--c-event)"></i>事件期間</span></div></div>
+      <div class="card"><h3>異常分數（× 閾值）</h3><div class="chart" id="dr-c2"></div></div>` +
+      (hasC ? [["w_signage", "數位看板"], ["w_light", "路燈迴路"], ["w_camera", "攝影機"]].map(([k, l]) => `<div class="card"><h3>${l}</h3><div class="chart" id="dr-${k}"></div></div>`).join("") : "");
+    powerChart($("#dr-c1"), a.pole, i0 - 96, i1 + 96, [i0, i1]);
+    const w = seriesWindow(a.pole, i0 - 96, i1 + 96);
+    lineChart($("#dr-c2"), { t0: w.t0, n: w.n, height: 150, threshold: 1, yFmt: v => v.toFixed(1), label: "異常分數",
+      bands: [{ i0: i0 - w.i0, i1: i1 - w.i0, color: css("--c-event") }], series: [{ label: "異常分數", values: w.get("score"), color: css("--ink-2"), width: 1.4 }] });
+    if (hasC) ["w_signage", "w_light", "w_camera"].forEach(k => powerChart($("#dr-" + k), a.pole, i0 - 96, i1 + 96, [i0, i1], { act: k, exp: k + "_exp", height: 150 }));
+  } else if (tab === "特徵貢獻") {
+    const max = Math.max(1.5, ...a.contrib.map(c => c.value));
+    body.innerHTML = `<div class="card"><h3>各特徵偏離程度（事件期間平均，1 = 閾值等級）</h3><div style="display:grid;gap:10px">` +
+      a.contrib.map(c => `<div class="hbar"><span>${esc(c.name)}</span><span class="track"><span class="fill" style="width:${Math.min(100, c.value / max * 100)}%;background:${c.value >= 1 ? "var(--crit)" : "var(--c-actual)"}"></span><span class="thr" style="left:${1 / max * 100}%"></span></span><span class="mono num" style="text-align:right">${c.value.toFixed(2)}</span></div>`).join("") +
+      `</div><p class="note">每個特徵的重建誤差除以該杆在校準期的第 99 百分位誤差。黑色刻線為 1；超過 1 的特徵以紅色標示。</p></div>`;
+  } else if (tab === "周邊情境") {
+    body.innerHTML = `<div class="card"><h3>人流（counting 事件數 / 15 分鐘）</h3><div class="chart" id="dr-p"></div></div><div class="card"><h3>路燈控制器亮度（%）</h3><div class="chart" id="dr-l"></div></div><p class="note">優先度 = 嚴重度 × (1 + 人流係數)，人流係數 = 事件期間平均人流 ÷ 訓練期第 90 百分位（上限 1）。</p>`;
+    const w = seriesWindow(a.pole, i0 - 96, i1 + 96), band = [{ i0: i0 - w.i0, i1: i1 - w.i0, color: css("--c-event") }];
+    lineChart($("#dr-p"), { t0: w.t0, n: w.n, height: 150, bands: band, yFmt: v => Math.round(v), label: "人流", series: [{ label: "人流", values: w.get("people"), color: css("--c-people"), area: true }] });
+    lineChart($("#dr-l"), { t0: w.t0, n: w.n, height: 130, bands: band, yFmt: v => Math.round(v), unit: "%", label: "路燈亮度", series: [{ label: "亮度", values: w.get("light"), color: css("--c-light") }] });
+  } else if (tab === "各杆用電") {
+    const poles = a.pole.split("、");
+    body.innerHTML = poles.map(p => `<div class="card"><h3>${p}</h3><div class="chart" id="dr-${p}"></div></div>`).join("") + `<div class="legend"><span><i style="background:var(--c-actual)"></i>實際</span><span><i style="background:var(--c-expected)"></i>模型預期</span></div>`;
+    poles.forEach(p => powerChart($("#dr-" + p), "SCCP-" + p, i0 - 32, i1 + 32, [i0, i1], { height: 140 }));
+  }
+}
+function drawPole() {
+  const pl = D.poles.find(p => p.id === DR.id), body = $("#dr-body"), p = P();
+  $("#dr-eyebrow").textContent = "杆體";
+  $("#dr-title").textContent = `${pl.short} · ${pl.meter_model}電表`;
+  const tab = ["用電曲線", "警報紀錄", "設備配置"][DR.tab];
+  const nDays = Math.round((parseT(p.end) - parseT(p.start)) / 86400000);
+  if (DR.day == null) DR.day = Math.max(0, nDays - 3);
+  if (tab === "用電曲線") {
+    const opts = Array.from({ length: nDays - 2 }, (_, i) => { const d = new Date(parseT(p.start).getTime() + i * 86400000); return `<option value="${i}" ${i === DR.day ? "selected" : ""}>${fmtD(d)} 起 3 天</option>`; }).join("");
+    body.innerHTML = `<div class="filters"><label class="field">區間<select id="dr-day">${opts}</select></label><span class="note">紅底 = 模型警報時段</span></div>
+      <div class="card"><h3>杆體總功率</h3><div class="chart" id="dr-c1"></div><div class="legend"><span><i style="background:var(--c-actual)"></i>實際</span><span><i style="background:var(--c-expected)"></i>模型預期</span></div></div>
+      <div class="card"><h3>異常分數（× 閾值）</h3><div class="chart" id="dr-c2"></div></div>`;
+    const i0 = DR.day * 96, i1 = i0 + 3 * 96 - 1, w = seriesWindow(pl.id, i0, i1);
+    const bands = p.alarms.filter(a => a.type === "模型警報" && a.pole === pl.id).map(a => ({ i0: tIndex(parseT(a.start)) - i0, i1: tIndex(parseT(a.end)) - 1 - i0, color: css("--c-event") })).filter(b => b.i1 >= 0 && b.i0 <= w.n);
+    lineChart($("#dr-c1"), { t0: w.t0, n: w.n, height: 240, unit: " W", yFmt: v => Math.round(v), bands, label: "總功率",
+      series: [{ label: "模型預期", values: w.get("expected"), color: css("--c-expected"), width: 2.2 }, { label: "實際", values: w.get("actual"), color: css("--c-actual"), area: true }] });
+    lineChart($("#dr-c2"), { t0: w.t0, n: w.n, height: 140, threshold: 1, bands, yFmt: v => v.toFixed(1), label: "異常分數", series: [{ label: "異常分數", values: w.get("score"), color: css("--ink-2"), width: 1.4 }] });
+    $("#dr-day").addEventListener("change", e => { DR.day = +e.target.value; drawPole(); });
+  } else if (tab === "警報紀錄") {
+    const al = p.alarms.filter(a => a.pole === pl.id || (a.type === "全區同步異常" && a.pole.split("、").includes(pl.short))).sort((a, b) => a.start < b.start ? 1 : -1);
+    body.innerHTML = `<div class="card"><div class="list">${al.length ? al.map(a => `<button class="li" data-alarm="${a.id}">${sevPill(a)}<span class="t"><b>${fmtDT(parseT(a.start))} · ${a.hours} 小時</b><span>${esc(a.type)}${a.feature ? " · " + esc(a.feature) : ""}</span></span><span class="arrow">→</span></button>`).join("") : `<p class="empty">本期沒有警報</p>`}</div></div>`;
+  } else {
+    body.innerHTML = `<div class="facts">
+      <div class="fact"><span class="l">電表型號</span><span class="v sm">${pl.meter_model}</span></div>
+      <div class="fact"><span class="l">白天功率（中位數）</span><span class="v num">${pl.day_w} W</span></div>
+      <div class="fact"><span class="l">夜間功率（中位數）</span><span class="v num">${pl.night_w} W</span></div>
+      <div class="fact"><span class="l">路燈控制器</span><span class="v num">${pl.n_lights}</span></div>
+      <div class="fact"><span class="l">攝影機</span><span class="v num">${pl.n_cameras}</span></div>
+      <div class="fact"><span class="l">座標</span><span class="v sm mono">${pl.lat.toFixed(5)}, ${pl.lon.toFixed(5)}</span></div></div>
+      <div class="card"><h3>分迴路</h3><div>${pl.circuits.map(c => `<span class="chip">${c}</span>`).join("")}${pl.has_env ? `<span class="chip">環境感測</span>` : ""}</div><p class="note">MP 迴路為總電源，等於各分迴路加總加上未計量用電。</p></div>`;
+  }
+}
+
+/* ---------- events ---------- */
+document.addEventListener("click", e => {
+  const t = e.target.closest("[data-period],[data-range],[data-mset],[data-alarm],[data-pole],[data-tab],[data-sort],[data-go]");
+  if (!t) return;
+  if (t.dataset.period) { S.period = t.dataset.period; try { localStorage.setItem("pw-period", S.period); } catch (err) {} closeDrawer(); render(); }
+  else if (t.dataset.range) { S.range = t.dataset.range; renderOverview(); }
+  else if (t.dataset.mset) { S.mset = t.dataset.mset; renderModel(); }
+  else if (t.dataset.tab) { DR.tab = +t.dataset.tab; drawDrawer(); }
+  else if (t.dataset.sort) { const k = t.dataset.sort; S.sort = { key: k, dir: S.sort.key === k ? -S.sort.dir : -1 }; renderAlarms(); }
+  else if (t.dataset.go) { location.hash = t.dataset.go; }
+  else if (t.dataset.alarm) { openDrawer("alarm", t.dataset.alarm); }
+  else if (t.dataset.pole) { openDrawer("pole", t.dataset.pole); }
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && DR) { closeDrawer(); return; }
+  if ((e.key === "Enter" || e.key === " ") && e.target.matches(".pt")) { e.preventDefault(); openDrawer("pole", e.target.dataset.pole); return; }
+  if (e.target.matches("input,select,textarea") || e.metaKey || e.ctrlKey || e.altKey) return;
+  const k = Object.keys(PAGES)[+e.key - 1]; if (k) location.hash = k;
+});
+["f-pole", "f-type", "f-sev", "f-date"].forEach(id => document.getElementById(id).addEventListener("change", renderAlarms));
+$("#f-clear").addEventListener("click", () => { ["f-pole", "f-type", "f-sev", "f-date"].forEach(id => document.getElementById(id).value = ""); renderAlarms(); });
+$("#dr-close").addEventListener("click", closeDrawer);
+$("#drawer-bg").addEventListener("click", closeDrawer);
+window.addEventListener("hashchange", () => go(location.hash.slice(1)));
+let rz; window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => { if (D) { render(); drawDrawer(); } }, 150); });
+const mq = matchMedia("(prefers-color-scheme: dark)"); mq.addEventListener?.("change", () => { if (D) { render(); drawDrawer(); } });
+new MutationObserver(() => { if (D) { render(); drawDrawer(); } }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+fetch("data.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
+  D = d;
+  if (!D.periods[S.period]) S.period = Object.keys(D.periods)[0];
+  $("#loading").hidden = true;
+  $("#gen-note").textContent = `資料產生於 ${D.generated}`;
+  go(location.hash.slice(1) || "overview");
+}).catch(err => { $("#loading").textContent = `資料載入失敗（${err.message}）。請確認 data.json 與頁面放在同一個位置。`; });
+})();
+</script>

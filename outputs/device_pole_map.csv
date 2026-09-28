@@ -1,0 +1,90 @@
+﻿polename,system,id_level,device_type,join_key,join_to,dcid,loadid,category_code,meter_model,latitude,longitude,rows_in_data
+SCCP-SP-01,攝影機,device,攝影機,IN30---1765972201573,cameranumberinfo_*.deviceid / camerastringinfo_*.deviceid,11221,,,10,25.043868,121.55906,701759
+SCCP-SP-01,路燈,device,路燈控制器,INL1---1765521500346,lightnumberinfo_*.deviceid,11221,,,10,25.043868,121.55906,28858
+SCCP-SP-01,電表,circuit,MP迴路,11290,meterinfo2.meterid / meterprofile.meterid,11221,1,01,10,25.043868,121.55906,28299
+SCCP-SP-01,電表,circuit,網路設備迴路,11293,meterinfo2.meterid / meterprofile.meterid,11221,4,06,10,25.043868,121.55906,28302
+SCCP-SP-01,電表,circuit,路燈迴路,11295,meterinfo2.meterid / meterprofile.meterid,11221,6,10,10,25.043868,121.55906,28302
+SCCP-SP-01,電表,circuit,智慧指標迴路,11292,meterinfo2.meterid / meterprofile.meterid,11221,3,11,10,25.043868,121.55906,28302
+SCCP-SP-01,電表,circuit,數位看板迴路,11291,meterinfo2.meterid / meterprofile.meterid,11221,2,12,10,25.043868,121.55906,28304
+SCCP-SP-01,電表,circuit,攝影機迴路,11294,meterinfo2.meterid / meterprofile.meterid,11221,5,13,10,25.043868,121.55906,28303
+SCCP-SP-01,電表,device,杆體電表(收集器),IN12-0011141A6F2C-10,115年5月-6月_各杆體總耗能_台北_v2.xlsx.deviceid（sheet 名稱 = polename）,11221,,,10,25.043868,121.55906,
+SCCP-SP-02,攝影機,device,攝影機,IN30---1765972800665,cameranumberinfo_*.deviceid / camerastringinfo_*.deviceid,11228,,,20,25.044441,121.55918,499524
+SCCP-SP-02,路燈,device,路燈控制器,INL1---1765521501986,lightnumberinfo_*.deviceid,11228,,,20,25.044441,121.55918,28848
+SCCP-SP-02,電表,circuit,MP迴路,11336,meterinfo2.meterid / meterprofile.meterid,11228,1,01,20,25.044441,121.55918,28300
+SCCP-SP-02,電表,circuit,路燈迴路,11340,meterinfo2.meterid / meterprofile.meterid,11228,5,10,20,25.044441,121.55918,28307
+SCCP-SP-02,電表,circuit,智慧指標迴路,11338,meterinfo2.meterid / meterprofile.meterid,11228,3,11,20,25.044441,121.55918,28308
+SCCP-SP-02,電表,circuit,數位看板迴路,11337,meterinfo2.meterid / meterprofile.meterid,11228,2,12,20,25.044441,121.55918,28308
+SCCP-SP-02,電表,circuit,攝影機迴路,11339,meterinfo2.meterid / meterprofile.meterid,11228,4,13,20,25.044441,121.55918,28310
+SCCP-SP-02,電表,device,杆體電表(收集器),IN12-0011141A6F1D-20,115年5月-6月_各杆體總耗能_台北_v2.xlsx.deviceid（sheet 名稱 = polename）,11228,,,20,25.044441,121.55918,
+SCCP-SP-03,攝影機,device,攝影機,IN30---1765972800790,cameranumberinfo_*.deviceid / camerastringinfo_*.deviceid,11229,,,20,25.044086,121.5609,468805
+SCCP-SP-03,路燈,device,路燈控制器,INL1---1765521502718,lightnumberinfo_*.deviceid,11229,,,20,25.044086,121.5609,28766
+SCCP-SP-03,電表,circuit,MP迴路,11342,meterinfo2.meterid / meterprofile.meterid,11229,1,01,20,25.044086,121.5609,28313
+SCCP-SP-03,電表,circuit,路燈迴路,11346,meterinfo2.meterid / meterprofile.meterid,11229,5,10,20,25.044086,121.5609,28316
+SCCP-SP-03,電表,circuit,智慧指標迴路,11344,meterinfo2.meterid / meterprofile.meterid,11229,3,11,20,25.044086,121.5609,28313
+SCCP-SP-03,電表,circuit,數位看板迴路,11343,meterinfo2.meterid / meterprofile.meterid,11229,2,12,20,25.044086,121.5609,28315
+SCCP-SP-03,電表,circuit,攝影機迴路,11345,meterinfo2.meterid / meterprofile.meterid,11229,4,13,20,25.044086,121.5609,28314
+SCCP-SP-03,電表,device,杆體電表(收集器),IN12-0011141A6F5C-20,115年5月-6月_各杆體總耗能_台北_v2.xlsx.deviceid（sheet 名稱 = polename）,11229,,,20,25.044086,121.5609,
+SCCP-SP-04,攝影機,device,攝影機,IN30---1765972801051,cameranumberinfo_*.deviceid / camerastringinfo_*.deviceid,11215,,,10,25.044946,121.56047,149006
+SCCP-SP-04,路燈,device,路燈控制器,INL1---1765521503012,lightnumberinfo_*.deviceid,11215,,,10,25.044946,121.56047,28532
+SCCP-SP-04,電表,circuit,MP迴路,11251,meterinfo2.meterid / meterprofile.meterid,11215,1,01,10,25.044946,121.56047,28293
+SCCP-SP-04,電表,circuit,網路設備迴路,11254,meterinfo2.meterid / meterprofile.meterid,11215,4,06,10,25.044946,121.56047,28295
+SCCP-SP-04,電表,circuit,路燈迴路,11256,meterinfo2.meterid / meterprofile.meterid,11215,6,10,10,25.044946,121.56047,28284
+SCCP-SP-04,電表,circuit,智慧指標迴路,11253,meterinfo2.meterid / meterprofile.meterid,11215,3,11,10,25.044946,121.56047,28295
+SCCP-SP-04,電表,circuit,數位看板迴路,11252,meterinfo2.meterid / meterprofile.meterid,11215,2,12,10,25.044946,121.56047,28295
+SCCP-SP-04,電表,circuit,攝影機迴路,11255,meterinfo2.meterid / meterprofile.meterid,11215,5,13,10,25.044946,121.56047,28296
+SCCP-SP-04,電表,device,杆體電表(收集器),IN12-0011141A6EFC-10,115年5月-6月_各杆體總耗能_台北_v2.xlsx.deviceid（sheet 名稱 = polename）,11215,,,10,25.044946,121.56047,
+SCCP-SP-05,攝影機,device,攝影機,IN30---1765972801161,cameranumberinfo_*.deviceid / camerastringinfo_*.deviceid,11223,,,10,25.044193,121.56145,129499
+SCCP-SP-05,環境感測,device,環境感測器,IN21---1765521502354,sensornumberinfo_*.deviceid,11223,,,10,25.044193,121.56145,91420
+SCCP-SP-05,路燈,device,路燈控制器,INL1---1765521503237,lightnumberinfo_*.deviceid,11223,,,10,25.044193,121.56145,23208
+SCCP-SP-05,電表,circuit,MP迴路,11304,meterinfo2.meterid / meterprofile.meterid,11223,1,01,10,25.044193,121.56145,28293
+SCCP-SP-05,電表,circuit,網路設備迴路,11307,meterinfo2.meterid / meterprofile.meterid,11223,4,06,10,25.044193,121.56145,28295
+SCCP-SP-05,電表,circuit,路燈迴路,11309,meterinfo2.meterid / meterprofile.meterid,11223,6,10,10,25.044193,121.56145,28297
+SCCP-SP-05,電表,circuit,數位看板迴路,11305,meterinfo2.meterid / meterprofile.meterid,11223,2,12,10,25.044193,121.56145,28298
+SCCP-SP-05,電表,circuit,攝影機迴路,11308,meterinfo2.meterid / meterprofile.meterid,11223,5,13,10,25.044193,121.56145,28297
+SCCP-SP-05,電表,circuit,環境感測迴路,11306,meterinfo2.meterid / meterprofile.meterid,11223,3,14,10,25.044193,121.56145,28298
+SCCP-SP-05,電表,device,杆體電表(收集器),IN12-0011141A6F26-10,115年5月-6月_各杆體總耗能_台北_v2.xlsx.deviceid（sheet 名稱 = polename）,11223,,,10,25.044193,121.56145,
+SCCP-SP-06,攝影機,device,攝影機,IN30---1765972801539,cameranumberinfo_*.deviceid / camerastringinfo_*.deviceid,11219,,,10,25.043031,121.56176,851521
+SCCP-SP-06,路燈,device,路燈控制器,INL1---1765521503470,lightnumberinfo_*.deviceid,11219,,,10,25.043031,121.56176,28684
+SCCP-SP-06,電表,circuit,MP迴路,11270,meterinfo2.meterid / meterprofile.meterid,11219,1,01,10,25.043031,121.56176,27468
+SCCP-SP-06,電表,circuit,網路設備迴路,11273,meterinfo2.meterid / meterprofile.meterid,11219,4,06,10,25.043031,121.56176,27469
+SCCP-SP-06,電表,circuit,路燈迴路,11275,meterinfo2.meterid / meterprofile.meterid,11219,6,10,10,25.043031,121.56176,27454
+SCCP-SP-06,電表,circuit,智慧指標迴路,11272,meterinfo2.meterid / meterprofile.meterid,11219,3,11,10,25.043031,121.56176,27469
+SCCP-SP-06,電表,circuit,數位看板迴路,11271,meterinfo2.meterid / meterprofile.meterid,11219,2,12,10,25.043031,121.56176,27466
+SCCP-SP-06,電表,circuit,攝影機迴路,11274,meterinfo2.meterid / meterprofile.meterid,11219,5,13,10,25.043031,121.56176,27467
+SCCP-SP-06,電表,device,杆體電表(收集器),IN12-0011141A6F71-10,115年5月-6月_各杆體總耗能_台北_v2.xlsx.deviceid（sheet 名稱 = polename）,11219,,,10,25.043031,121.56176,
+SCCP-SP-07,攝影機,device,攝影機,IN30---1765972801860,cameranumberinfo_*.deviceid / camerastringinfo_*.deviceid,11225,,,20,25.043211,121.5615,451636
+SCCP-SP-07,攝影機,device,攝影機,IN30---1765972802149,cameranumberinfo_*.deviceid / camerastringinfo_*.deviceid,11225,,,20,25.043211,121.5615,155763
+SCCP-SP-07,路燈,device,路燈控制器,INL1---1765521503669,lightnumberinfo_*.deviceid,11225,,,20,25.043211,121.5615,28968
+SCCP-SP-07,電表,circuit,MP迴路,11321,meterinfo2.meterid / meterprofile.meterid,11225,1,01,20,25.043211,121.5615,28166
+SCCP-SP-07,電表,circuit,網路設備迴路,11324,meterinfo2.meterid / meterprofile.meterid,11225,4,06,20,25.043211,121.5615,28181
+SCCP-SP-07,電表,circuit,路燈迴路,11325,meterinfo2.meterid / meterprofile.meterid,11225,5,10,20,25.043211,121.5615,28180
+SCCP-SP-07,電表,circuit,智慧指標迴路,11323,meterinfo2.meterid / meterprofile.meterid,11225,3,11,20,25.043211,121.5615,28182
+SCCP-SP-07,電表,circuit,數位看板迴路,11322,meterinfo2.meterid / meterprofile.meterid,11225,2,12,20,25.043211,121.5615,28178
+SCCP-SP-07,電表,device,杆體電表(收集器),IN12-0011141A6F5F-20,115年5月-6月_各杆體總耗能_台北_v2.xlsx.deviceid（sheet 名稱 = polename）,11225,,,20,25.043211,121.5615,
+SCCP-SP-08,攝影機,device,攝影機,IN30---1765972802384,cameranumberinfo_*.deviceid / camerastringinfo_*.deviceid,11227,,,20,25.043235,121.56126,584180
+SCCP-SP-08,攝影機,device,攝影機,IN30---1765972802954,cameranumberinfo_*.deviceid / camerastringinfo_*.deviceid,11227,,,20,25.043235,121.56126,85548
+SCCP-SP-08,路燈,device,路燈控制器,INL1---1765521503845,lightnumberinfo_*.deviceid,11227,,,20,25.043235,121.56126,28666
+SCCP-SP-08,電表,circuit,MP迴路,11331,meterinfo2.meterid / meterprofile.meterid,11227,1,01,20,25.043235,121.56126,28237
+SCCP-SP-08,電表,circuit,路燈迴路,11335,meterinfo2.meterid / meterprofile.meterid,11227,5,10,20,25.043235,121.56126,28251
+SCCP-SP-08,電表,circuit,智慧指標迴路,11333,meterinfo2.meterid / meterprofile.meterid,11227,3,11,20,25.043235,121.56126,28253
+SCCP-SP-08,電表,circuit,數位看板迴路,11332,meterinfo2.meterid / meterprofile.meterid,11227,2,12,20,25.043235,121.56126,28250
+SCCP-SP-08,電表,circuit,攝影機迴路,11334,meterinfo2.meterid / meterprofile.meterid,11227,4,13,20,25.043235,121.56126,28254
+SCCP-SP-08,電表,device,杆體電表(收集器),IN12-0011141A6F6E-20,115年5月-6月_各杆體總耗能_台北_v2.xlsx.deviceid（sheet 名稱 = polename）,11227,,,20,25.043235,121.56126,
+SCCP-SP-09,攝影機,device,攝影機,IN30---1765972803078,cameranumberinfo_*.deviceid / camerastringinfo_*.deviceid,11226,,,20,25.043619,121.56086,258003
+SCCP-SP-09,路燈,device,路燈控制器,INL1---1765521504354,lightnumberinfo_*.deviceid,11226,,,20,25.043619,121.56086,28720
+SCCP-SP-09,路燈,device,路燈控制器,INL1---1765521504562,lightnumberinfo_*.deviceid,11226,,,20,25.043619,121.56086,29052
+SCCP-SP-09,電表,circuit,MP迴路,11326,meterinfo2.meterid / meterprofile.meterid,11226,1,01,20,25.043619,121.56086,28278
+SCCP-SP-09,電表,circuit,路燈迴路,11330,meterinfo2.meterid / meterprofile.meterid,11226,5,10,20,25.043619,121.56086,28299
+SCCP-SP-09,電表,circuit,智慧指標迴路,11328,meterinfo2.meterid / meterprofile.meterid,11226,3,11,20,25.043619,121.56086,28296
+SCCP-SP-09,電表,circuit,數位看板迴路,11327,meterinfo2.meterid / meterprofile.meterid,11226,2,12,20,25.043619,121.56086,28298
+SCCP-SP-09,電表,circuit,攝影機迴路,11329,meterinfo2.meterid / meterprofile.meterid,11226,4,13,20,25.043619,121.56086,28300
+SCCP-SP-09,電表,device,杆體電表(收集器),IN12-0011141A6F74-20,115年5月-6月_各杆體總耗能_台北_v2.xlsx.deviceid（sheet 名稱 = polename）,11226,,,20,25.043619,121.56086,
+SCCP-SP-10,攝影機,device,攝影機,IN30---1765972803269,cameranumberinfo_*.deviceid / camerastringinfo_*.deviceid,11218,,,10,25.043231,121.56006,273345
+SCCP-SP-10,路燈,device,路燈控制器,INL1---1765521504749,lightnumberinfo_*.deviceid,11218,,,10,25.043231,121.56006,16566
+SCCP-SP-10,電表,circuit,MP迴路,11277,meterinfo2.meterid / meterprofile.meterid,11218,1,01,10,25.043231,121.56006,23998
+SCCP-SP-10,電表,circuit,網路設備迴路,11280,meterinfo2.meterid / meterprofile.meterid,11218,4,06,10,25.043231,121.56006,23998
+SCCP-SP-10,電表,circuit,路燈迴路,11282,meterinfo2.meterid / meterprofile.meterid,11218,6,10,10,25.043231,121.56006,23990
+SCCP-SP-10,電表,circuit,智慧指標迴路,11279,meterinfo2.meterid / meterprofile.meterid,11218,3,11,10,25.043231,121.56006,23997
+SCCP-SP-10,電表,circuit,數位看板迴路,11278,meterinfo2.meterid / meterprofile.meterid,11218,2,12,10,25.043231,121.56006,23998
+SCCP-SP-10,電表,circuit,攝影機迴路,11281,meterinfo2.meterid / meterprofile.meterid,11218,5,13,10,25.043231,121.56006,23998
+SCCP-SP-10,電表,device,杆體電表(收集器),IN12-0011141A6F65-10,115年5月-6月_各杆體總耗能_台北_v2.xlsx.deviceid（sheet 名稱 = polename）,11218,,,10,25.043231,121.56006,

@@ -1,0 +1,145 @@
+﻿待跑 72 組（已完成 0）
+[1/72] G3 lstm|ft_pole|lam0.0|full|w96 seed=0 28.6s | B_val AUROC=0.729 recall=0.50
+[2/72] G3 lstm|ft_pole|lam0.0|full|w96 seed=1 19.9s | B_val AUROC=0.712 recall=0.47
+[3/72] G3 lstm|ft_pole|lam0.0|full|w96 seed=2 27.1s | B_val AUROC=0.726 recall=0.50
+[4/72] G5 lstm|ft_pole|lam0.5|full|w48 seed=0 32.9s | B_val AUROC=0.769 recall=0.47
+[5/72] G5 lstm|ft_pole|lam0.5|full|w48 seed=1 44.0s | B_val AUROC=0.762 recall=0.53
+[6/72] G5 lstm|ft_pole|lam0.5|full|w48 seed=2 32.1s | B_val AUROC=0.739 recall=0.50
+[7/72] G2 lstm|b_only|lam0.5|full|w96 seed=0 13.4s | B_val AUROC=0.721 recall=0.42
+[8/72] G2 lstm|ft_decoder|lam0.5|full|w96 seed=0 21.0s | B_val AUROC=0.711 recall=0.47
+[9/72] G2 lstm|ft_pole|lam0.5|full|w96 seed=0 9.8s | B_val AUROC=0.741 recall=0.47
+[10/72] G2 lstm|joint|lam0.5|full|w96 seed=0 26.7s | B_val AUROC=0.731 recall=0.47
+[11/72] G2 lstm|no_update|lam0.5|full|w96 seed=0 0.9s | B_val AUROC=0.679 recall=0.44
+[12/72] G2 lstm|b_only|lam0.5|full|w96 seed=1 7.6s | B_val AUROC=0.705 recall=0.47
+[13/72] G2 lstm|ft_decoder|lam0.5|full|w96 seed=1 23.5s | B_val AUROC=0.703 recall=0.44
+[14/72] G2 lstm|ft_pole|lam0.5|full|w96 seed=1 8.6s | B_val AUROC=0.724 recall=0.44
+[15/72] G2 lstm|joint|lam0.5|full|w96 seed=1 22.1s | B_val AUROC=0.720 recall=0.50
+[16/72] G2 lstm|no_update|lam0.5|full|w96 seed=1 0.9s | B_val AUROC=0.664 recall=0.53
+[17/72] G2 lstm|b_only|lam0.5|full|w96 seed=2 11.5s | B_val AUROC=0.714 recall=0.44
+[18/72] G2 lstm|ft_decoder|lam0.5|full|w96 seed=2 23.1s | B_val AUROC=0.714 recall=0.44
+[19/72] G2 lstm|ft_pole|lam0.5|full|w96 seed=2 7.3s | B_val AUROC=0.731 recall=0.50
+[20/72] G2 lstm|joint|lam0.5|full|w96 seed=2 29.8s | B_val AUROC=0.717 recall=0.47
+[21/72] G2 lstm|no_update|lam0.5|full|w96 seed=2 1.0s | B_val AUROC=0.668 recall=0.44
+[22/72] G5 lstm|ft_pole|lam0.5|full|w192 seed=0 23.1s | B_val AUROC=0.724 recall=0.42
+[23/72] G5 lstm|ft_pole|lam0.5|full|w192 seed=1 22.7s | B_val AUROC=0.722 recall=0.47
+[24/72] G5 lstm|ft_pole|lam0.5|full|w192 seed=2 18.5s | B_val AUROC=0.723 recall=0.47
+[25/72] G4 lstm|ft_pole|lam0.5|no_light|w96 seed=0 26.0s | B_val AUROC=0.730 recall=0.53
+[26/72] G4 lstm|ft_pole|lam0.5|no_light|w96 seed=1 26.7s | B_val AUROC=0.748 recall=0.53
+[27/72] G4 lstm|ft_pole|lam0.5|no_light|w96 seed=2 24.7s | B_val AUROC=0.731 recall=0.44
+[28/72] G4 lstm|ft_pole|lam0.5|none|w96 seed=0 62.5s | B_val AUROC=0.743 recall=0.58
+[29/72] G4 lstm|ft_pole|lam0.5|none|w96 seed=1 62.4s | B_val AUROC=0.743 recall=0.61
+[30/72] G4 lstm|ft_pole|lam0.5|none|w96 seed=2 60.1s | B_val AUROC=0.736 recall=0.58
+[31/72] G3 lstm|ft_pole|lam1.0|full|w96 seed=0 23.3s | B_val AUROC=0.731 recall=0.44
+[32/72] G3 lstm|ft_pole|lam1.0|full|w96 seed=1 25.0s | B_val AUROC=0.714 recall=0.44
+[33/72] G3 lstm|ft_pole|lam1.0|full|w96 seed=2 18.9s | B_val AUROC=0.736 recall=0.47
+[34/72] G0 pca seed=0 0.5s | B_val AUROC=0.569 recall=0.31
+[35/72] G0 pca seed=1 0.5s | B_val AUROC=0.569 recall=0.31
+[36/72] G0 pca seed=2 0.4s | B_val AUROC=0.569 recall=0.31
+[37/72] G0 stat seed=0 0.7s | B_val AUROC=0.793 recall=0.53
+[38/72] G0 stat seed=1 0.7s | B_val AUROC=0.793 recall=0.53
+[39/72] G0 stat seed=2 0.8s | B_val AUROC=0.793 recall=0.53
+[40/72] G3 transformer|ft_pole|lam0.0|full|w96 seed=0 126.1s | B_val AUROC=0.704 recall=0.56
+[41/72] G3 transformer|ft_pole|lam0.0|full|w96 seed=1 115.1s | B_val AUROC=0.689 recall=0.56
+[42/72] G3 transformer|ft_pole|lam0.0|full|w96 seed=2 116.1s | B_val AUROC=0.657 recall=0.56
+[43/72] G5 transformer|ft_pole|lam0.5|full|w48 seed=0 91.9s | B_val AUROC=0.718 recall=0.58
+[44/72] G5 transformer|ft_pole|lam0.5|full|w48 seed=1 129.0s | B_val AUROC=0.679 recall=0.50
+[45/72] G5 transformer|ft_pole|lam0.5|full|w48 seed=2 104.6s | B_val AUROC=0.653 recall=0.47
+[46/72] G2 transformer|b_only|lam0.5|full|w96 seed=0 53.2s | B_val AUROC=0.673 recall=0.50
+[47/72] G2 transformer|ft_decoder|lam0.5|full|w96 seed=0 108.6s | B_val AUROC=0.695 recall=0.58
+[48/72] G2 transformer|ft_pole|lam0.5|full|w96 seed=0 17.7s | B_val AUROC=0.692 recall=0.58
+[49/72] G2 transformer|joint|lam0.5|full|w96 seed=0 207.4s | B_val AUROC=0.655 recall=0.53
+[50/72] G2 transformer|no_update|lam0.5|full|w96 seed=0 1.3s | B_val AUROC=0.547 recall=0.56
+[51/72] G2 transformer|b_only|lam0.5|full|w96 seed=1 52.9s | B_val AUROC=0.689 recall=0.50
+[52/72] G2 transformer|ft_decoder|lam0.5|full|w96 seed=1 112.8s | B_val AUROC=0.705 recall=0.56
+[53/72] G2 transformer|ft_pole|lam0.5|full|w96 seed=1 24.8s | B_val AUROC=0.694 recall=0.53
+[54/72] G2 transformer|joint|lam0.5|full|w96 seed=1 151.5s | B_val AUROC=0.645 recall=0.53
+[55/72] G2 transformer|no_update|lam0.5|full|w96 seed=1 1.5s | B_val AUROC=0.565 recall=0.53
+[56/72] G2 transformer|b_only|lam0.5|full|w96 seed=2 67.9s | B_val AUROC=0.666 recall=0.53
+[57/72] G2 transformer|ft_decoder|lam0.5|full|w96 seed=2 162.5s | B_val AUROC=0.672 recall=0.56
+[58/72] G2 transformer|ft_pole|lam0.5|full|w96 seed=2 39.7s | B_val AUROC=0.678 recall=0.53
+[59/72] G2 transformer|joint|lam0.5|full|w96 seed=2 301.3s | B_val AUROC=0.685 recall=0.53
+[60/72] G2 transformer|no_update|lam0.5|full|w96 seed=2 1.9s | B_val AUROC=0.604 recall=0.44
+[61/72] G5 transformer|ft_pole|lam0.5|full|w192 seed=0 395.0s | B_val AUROC=0.706 recall=0.47
+[62/72] G5 transformer|ft_pole|lam0.5|full|w192 seed=1 352.1s | B_val AUROC=0.692 recall=0.39
+[63/72] G5 transformer|ft_pole|lam0.5|full|w192 seed=2 233.5s | B_val AUROC=0.713 recall=0.47
+[64/72] G4 transformer|ft_pole|lam0.5|no_light|w96 seed=0 120.6s | B_val AUROC=0.701 recall=0.56
+[65/72] G4 transformer|ft_pole|lam0.5|no_light|w96 seed=1 134.9s | B_val AUROC=0.703 recall=0.53
+[66/72] G4 transformer|ft_pole|lam0.5|no_light|w96 seed=2 107.7s | B_val AUROC=0.679 recall=0.53
+[67/72] G4 transformer|ft_pole|lam0.5|none|w96 seed=0 161.0s | B_val AUROC=0.702 recall=0.56
+[68/72] G4 transformer|ft_pole|lam0.5|none|w96 seed=1 160.4s | B_val AUROC=0.669 recall=0.56
+[69/72] G4 transformer|ft_pole|lam0.5|none|w96 seed=2 139.0s | B_val AUROC=0.636 recall=0.53
+[70/72] G3 transformer|ft_pole|lam1.0|full|w96 seed=0 141.9s | B_val AUROC=0.700 recall=0.56
+[71/72] G3 transformer|ft_pole|lam1.0|full|w96 seed=1 99.3s | B_val AUROC=0.699 recall=0.50
+[72/72] G3 transformer|ft_pole|lam1.0|full|w96 seed=2 101.6s | B_val AUROC=0.686 recall=0.53
+uv : Traceback (most recent call last):
+At line:1 char:417
++ ... NG='utf-8'; uv run python -W ignore scripts/ablation.py *> outputs\ab ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "C:\Users\willy\OneDrive\Desktop\Projects\智慧電表\scripts\ablation.py", line 317, in <module>
+    agg = r.groupby(["group", "config", "eval_set"])[metrics].agg(["mean", "std"])
+    ^^^^^^^^^
+  File "C:\Users\willy\OneDrive\Desktop\Projects\智慧電表\scripts\ablation.py", line 295, in summary
+    # 依 (骨幹, λ, 條件, 視窗, 種子) 排序，讓共用階段一的策略連續執行
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\willy\OneDrive\Desktop\Projects\智慧電表\.venv\Lib\site-packages\pandas\core\groupby\generic.py", line 229
+1, in aggregate
+    result = op.agg()
+             ^^^^^^^^
+  File "C:\Users\willy\OneDrive\Desktop\Projects\智慧電表\.venv\Lib\site-packages\pandas\core\apply.py", line 297, in agg
+    return self.agg_list_like()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\willy\OneDrive\Desktop\Projects\智慧電表\.venv\Lib\site-packages\pandas\core\apply.py", line 414, in agg_l
+ist_like
+    return self.agg_or_apply_list_like(op_name="agg")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\willy\OneDrive\Desktop\Projects\智慧電表\.venv\Lib\site-packages\pandas\core\apply.py", line 1640, in agg_
+or_apply_list_like
+    keys, results = self.compute_list_like(op_name, selected_obj, kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\willy\OneDrive\Desktop\Projects\智慧電表\.venv\Lib\site-packages\pandas\core\apply.py", line 473, in compu
+te_list_like
+    new_res = getattr(colg, op_name)(func, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\willy\OneDrive\Desktop\Projects\智慧電表\.venv\Lib\site-packages\pandas\core\groupby\generic.py", line 464
+, in aggregate
+    ret = self._aggregate_multiple_funcs(func, *args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\willy\OneDrive\Desktop\Projects\智慧電表\.venv\Lib\site-packages\pandas\core\groupby\generic.py", line 522
+, in _aggregate_multiple_funcs
+    results[key] = self.aggregate(func, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\willy\OneDrive\Desktop\Projects\智慧電表\.venv\Lib\site-packages\pandas\core\groupby\generic.py", line 456
+, in aggregate
+    return getattr(self, func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\willy\OneDrive\Desktop\Projects\智慧電表\.venv\Lib\site-packages\pandas\core\groupby\groupby.py", line 228
+5, in mean
+    result = self._cython_agg_general(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\willy\OneDrive\Desktop\Projects\智慧電表\.venv\Lib\site-packages\pandas\core\groupby\groupby.py", line 180
+8, in _cython_agg_general
+    new_mgr = data.grouped_reduce(array_func)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\willy\OneDrive\Desktop\Projects\智慧電表\.venv\Lib\site-packages\pandas\core\internals\managers.py", line 
+2295, in grouped_reduce
+    res = func(arr)
+          ^^^^^^^^^
+  File "C:\Users\willy\OneDrive\Desktop\Projects\智慧電表\.venv\Lib\site-packages\pandas\core\groupby\groupby.py", line 178
+3, in array_func
+    result = self._grouper._cython_operation(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\willy\OneDrive\Desktop\Projects\智慧電表\.venv\Lib\site-packages\pandas\core\groupby\ops.py", line 963, in
+ _cython_operation
+    return cy_op.cython_operation(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\willy\OneDrive\Desktop\Projects\智慧電表\.venv\Lib\site-packages\pandas\core\groupby\ops.py", line 553, in
+ cython_operation
+    return values._groupby_op(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\willy\OneDrive\Desktop\Projects\智慧電表\.venv\Lib\site-packages\pandas\core\arrays\arrow\array.py", line 
+2748, in _groupby_op
+    raise TypeError(
+TypeError: dtype 'str' does not support operation 'mean'

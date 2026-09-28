@@ -1,0 +1,325 @@
+{
+ "power": {
+  "SCCP-SP-01": {
+   "w_total_s": {
+    "median": 149.8,
+    "scale": 171.6
+   },
+   "w_signage_s": {
+    "median": 101.0,
+    "scale": 199.60000000000002
+   },
+   "w_light_s": {
+    "median": 27.0,
+    "scale": 26.0
+   },
+   "w_camera_s": {
+    "median": 8.0,
+    "scale": 3.0
+   },
+   "w_indicator_s": {
+    "median": 0.0,
+    "scale": 2.0
+   },
+   "w_network_s": {
+    "median": 8.0,
+    "scale": 2.0
+   },
+   "w_unmetered_s": {
+    "median": 5.399999999999977,
+    "scale": 2.0
+   }
+  },
+  "SCCP-SP-02": {
+   "w_total_s": {
+    "median": 144.45999999999998,
+    "scale": 29.960000000000008
+   },
+   "w_signage_s": {
+    "median": 99.41,
+    "scale": 39.99000000000001
+   },
+   "w_light_s": {
+    "median": 27.48,
+    "scale": 27.6
+   },
+   "w_camera_s": {
+    "median": 12.780000000000001,
+    "scale": 2.0
+   },
+   "w_indicator_s": {
+    "median": 0.0,
+    "scale": 2.0
+   },
+   "w_network_s": {
+    "median": 0.0,
+    "scale": 1.0
+   },
+   "w_unmetered_s": {
+    "median": 12.580000000000034,
+    "scale": 2.0
+   }
+  },
+  "SCCP-SP-04": {
+   "w_total_s": {
+    "median": 124.6,
+    "scale": 53.599999999999994
+   },
+   "w_signage_s": {
+    "median": 0.0,
+    "scale": 2.0
+   },
+   "w_light_s": {
+    "median": 55.0,
+    "scale": 53.0
+   },
+   "w_camera_s": {
+    "median": 14.0,
+    "scale": 2.0
+   },
+   "w_indicator_s": {
+    "median": 41.6,
+    "scale": 4.16
+   },
+   "w_network_s": {
+    "median": 10.4,
+    "scale": 2.0
+   },
+   "w_unmetered_s": {
+    "median": 5.400000000000006,
+    "scale": 2.0
+   }
+  },
+  "SCCP-SP-05": {
+   "w_total_s": {
+    "median": 212.8,
+    "scale": 244.60000000000002
+   },
+   "w_signage_s": {
+    "median": 137.2,
+    "scale": 271.8
+   },
+   "w_light_s": {
+    "median": 27.0,
+    "scale": 26.0
+   },
+   "w_camera_s": {
+    "median": 14.0,
+    "scale": 2.0
+   },
+   "w_indicator_s": {
+    "median": 0.0,
+    "scale": 1.0
+   },
+   "w_network_s": {
+    "median": 9.0,
+    "scale": 2.0
+   },
+   "w_unmetered_s": {
+    "median": 3.3999999999999773,
+    "scale": 2.0
+   }
+  },
+  "SCCP-SP-06": {
+   "w_total_s": {
+    "median": 150.0,
+    "scale": 189.0
+   },
+   "w_signage_s": {
+    "median": 106.8,
+    "scale": 216.0
+   },
+   "w_light_s": {
+    "median": 27.0,
+    "scale": 26.0
+   },
+   "w_camera_s": {
+    "median": 12.0,
+    "scale": 2.0
+   },
+   "w_indicator_s": {
+    "median": 0.0,
+    "scale": 2.0
+   },
+   "w_network_s": {
+    "median": 9.0,
+    "scale": 2.0
+   },
+   "w_unmetered_s": {
+    "median": 5.199999999999989,
+    "scale": 2.0
+   }
+  },
+  "SCCP-SP-07": {
+   "w_total_s": {
+    "median": 132.84,
+    "scale": 32.295000000000016
+   },
+   "w_signage_s": {
+    "median": 91.13,
+    "scale": 57.06
+   },
+   "w_light_s": {
+    "median": 27.639999999999997,
+    "scale": 27.8
+   },
+   "w_camera_s": {
+    "median": 0.0,
+    "scale": 1.0
+   },
+   "w_indicator_s": {
+    "median": 0.0,
+    "scale": 2.0
+   },
+   "w_network_s": {
+    "median": 11.279999999999998,
+    "scale": 2.0
+   },
+   "w_unmetered_s": {
+    "median": 12.439999999999998,
+    "scale": 2.0
+   }
+  },
+  "SCCP-SP-08": {
+   "w_total_s": {
+    "median": 135.08999999999997,
+    "scale": 89.96000000000001
+   },
+   "w_signage_s": {
+    "median": 95.05000000000001,
+    "scale": 116.36
+   },
+   "w_light_s": {
+    "median": 27.5,
+    "scale": 27.619999999999997
+   },
+   "w_camera_s": {
+    "median": 12.48,
+    "scale": 2.0
+   },
+   "w_indicator_s": {
+    "median": 0.0,
+    "scale": 2.0
+   },
+   "w_network_s": {
+    "median": 0.0,
+    "scale": 1.0
+   },
+   "w_unmetered_s": {
+    "median": 9.960000000000008,
+    "scale": 2.0
+   }
+  },
+  "SCCP-SP-09": {
+   "w_total_s": {
+    "median": 172.88,
+    "scale": 158.14000000000001
+   },
+   "w_signage_s": {
+    "median": 113.29999999999998,
+    "scale": 211.42000000000002
+   },
+   "w_light_s": {
+    "median": 20.0,
+    "scale": 27.179999999999996
+   },
+   "w_camera_s": {
+    "median": 11.76,
+    "scale": 2.0
+   },
+   "w_indicator_s": {
+    "median": 0.0,
+    "scale": 2.0
+   },
+   "w_network_s": {
+    "median": 0.0,
+    "scale": 1.0
+   },
+   "w_unmetered_s": {
+    "median": 36.67000000000001,
+    "scale": 25.18000000000005
+   }
+  },
+  "SCCP-SP-10": {
+   "w_total_s": {
+    "median": 238.6,
+    "scale": 92.6
+   },
+   "w_signage_s": {
+    "median": 143.2,
+    "scale": 114.79999999999998
+   },
+   "w_light_s": {
+    "median": 27.0,
+    "scale": 26.0
+   },
+   "w_camera_s": {
+    "median": 12.0,
+    "scale": 2.0
+   },
+   "w_indicator_s": {
+    "median": 42.8,
+    "scale": 4.28
+   },
+   "w_network_s": {
+    "median": 9.0,
+    "scale": 2.0
+   },
+   "w_unmetered_s": {
+    "median": 9.599999999999994,
+    "scale": 2.0
+   }
+  }
+ },
+ "p_full_light": {
+  "SCCP-SP-01": 27.0,
+  "SCCP-SP-02": 27.6,
+  "SCCP-SP-04": 55.0,
+  "SCCP-SP-05": 27.0,
+  "SCCP-SP-06": 27.0,
+  "SCCP-SP-07": 27.8,
+  "SCCP-SP-08": 27.6,
+  "SCCP-SP-09": 27.619999999999997,
+  "SCCP-SP-10": 27.0
+ },
+ "v_dev": {
+  "median": -0.1622222222222547,
+  "scale": 2.0
+ },
+ "pole_ids": {
+  "SCCP-SP-01": 0,
+  "SCCP-SP-02": 1,
+  "SCCP-SP-04": 2,
+  "SCCP-SP-05": 3,
+  "SCCP-SP-06": 4,
+  "SCCP-SP-07": 5,
+  "SCCP-SP-08": 6,
+  "SCCP-SP-09": 7,
+  "SCCP-SP-10": 8
+ },
+ "features": {
+  "pole": [
+   "w_total_s",
+   "v_dev_s"
+  ],
+  "circuit": [
+   "w_signage_s",
+   "w_light_s",
+   "w_camera_s",
+   "w_indicator_s",
+   "w_network_s",
+   "w_unmetered_s",
+   "lamp_gap"
+  ],
+  "cond": [
+   "hour_sin",
+   "hour_cos",
+   "dow_sin",
+   "dow_cos",
+   "offday_f",
+   "holiday_f",
+   "light_level_f",
+   "m_light_level"
+  ]
+ }
+}

@@ -1,0 +1,306 @@
+<title>智慧杆特徵分佈調查</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>
+:root {
+  --ground: #f4f6f5;
+  --paper: #fcfcfb;
+  --ink: #16201c;
+  --ink-2: #4c5752;
+  --muted: #7a8580;
+  --rule: #dde2df;
+  --accent: #1c5cab;
+  --accent-soft: #e3edf9;
+  --warn: #9a5b00;
+  --warn-soft: #fbf1df;
+  --flag: #b23a3a;
+  --flag-soft: #f9e6e5;
+  --sans: "IBM Plex Sans", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --ground: #121614; --paper: #1b201e; --ink: #eef2f0; --ink-2: #bcc6c1; --muted: #8b958f;
+    --rule: #2d3431; --accent: #7fb0ee; --accent-soft: #1d2b3d;
+    --warn: #e6b35c; --warn-soft: #2e2615; --flag: #ee8b8b; --flag-soft: #341e1e;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ground: #121614; --paper: #1b201e; --ink: #eef2f0; --ink-2: #bcc6c1; --muted: #8b958f;
+  --rule: #2d3431; --accent: #7fb0ee; --accent-soft: #1d2b3d;
+  --warn: #e6b35c; --warn-soft: #2e2615; --flag: #ee8b8b; --flag-soft: #341e1e;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--ground); color: var(--ink); font-family: var(--sans);
+  font-size: 15.5px; line-height: 1.75; padding-inline: 20px; padding-block: 0 64px;
+}
+.wrap { max-width: 1120px; margin: 0 auto; }
+.prose { max-width: 70ch; }
+header.top { padding-block: 44px 28px; border-bottom: 1px solid var(--rule); display: grid; gap: 10px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-size: clamp(28px, 4vw, 38px); line-height: 1.25; margin: 0; font-weight: 700; text-wrap: balance; }
+h2 { font-size: 23px; line-height: 1.35; margin: 0; text-wrap: balance; }
+h3 { font-size: 17px; margin: 0; }
+.scope { display: flex; flex-wrap: wrap; gap: 8px 18px; color: var(--ink-2); font-size: 14px; }
+.scope b { font-family: var(--mono); font-weight: 500; color: var(--ink); }
+nav.toc { display: flex; flex-wrap: wrap; gap: 6px 16px; padding-block: 16px; font-size: 14px; border-bottom: 1px solid var(--rule); }
+nav.toc a { color: var(--ink-2); text-decoration: none; }
+nav.toc a:hover, nav.toc a:focus-visible { color: var(--accent); text-decoration: underline; }
+section { padding-block: 40px 8px; display: grid; gap: 18px; }
+section > .head { display: grid; gap: 6px; }
+.sec-q { color: var(--ink-2); margin: 0; }
+p { margin: 0; }
+code, .mono { font-family: var(--mono); font-size: .88em; }
+code { background: var(--accent-soft); color: var(--ink); padding: 1px 5px; border-radius: 4px; }
+a { color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.findings { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.findings li { display: grid; grid-template-columns: 92px 1fr; gap: 14px; align-items: baseline; padding-block: 12px; border-top: 1px solid var(--rule); }
+.tag { font-family: var(--mono); font-size: 11.5px; letter-spacing: .04em; padding: 2px 8px; border-radius: 3px; justify-self: start; white-space: nowrap; }
+.tag.dist { background: var(--accent-soft); color: var(--accent); }
+.tag.dq { background: var(--warn-soft); color: var(--warn); }
+.tag.anom { background: var(--flag-soft); color: var(--flag); }
+
+figure.fig { margin: 0; background: #fcfcfb; border: 1px solid var(--rule); border-radius: 6px; padding: 14px; display: grid; gap: 10px; }
+figure.fig img { display: block; width: 100%; height: auto; }
+figure.fig figcaption { color: #4c5752; font-size: 13.5px; line-height: 1.6; max-width: 90ch; }
+figure.fig figcaption b { color: #16201c; }
+
+.callout { border-left: 3px solid var(--warn); background: var(--warn-soft); padding: 12px 16px; border-radius: 0 6px 6px 0; }
+.callout.flag { border-color: var(--flag); background: var(--flag-soft); }
+
+.tbl { overflow-x: auto; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; line-height: 1.55; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; color: var(--ink-2); font-size: 12.5px; letter-spacing: .02em; background: var(--ground); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.num { font-variant-numeric: tabular-nums; }
+td .mono { white-space: nowrap; }
+.keep { color: var(--accent); font-weight: 600; white-space: nowrap; }
+.drop { color: var(--flag); font-weight: 600; white-space: nowrap; }
+.fix { color: var(--warn); font-weight: 600; white-space: nowrap; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 18px; }
+.stat-row { display: flex; flex-wrap: wrap; gap: 10px 28px; }
+.stat { display: grid; gap: 0; }
+.stat .v { font-size: 26px; font-weight: 700; }
+.stat .l { font-size: 13px; color: var(--ink-2); }
+footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--rule); color: var(--muted); font-size: 13.5px; display: grid; gap: 6px; }
+@media (max-width: 560px) {
+  .findings li { grid-template-columns: 1fr; gap: 4px; }
+  body { font-size: 15px; }
+}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div class="eyebrow">Feature EDA · 智慧杆異常用電預警</div>
+  <h1>智慧杆特徵分佈調查</h1>
+  <div class="scope">
+    <span>範圍 <b>台北 SCCP-SP-01 ~ 10</b></span>
+    <span>時段 A <b>2026/1/1 – 2/28</b>（有迴路明細）</span>
+    <span>時段 B <b>2026/5/1 – 6/30</b>（只有杆體總量）</span>
+    <span>粒度 <b>每杆 × 15 分鐘</b></span>
+  </div>
+</header>
+
+<nav class="toc" aria-label="目錄">
+  <a href="#summary">結論摘要</a>
+  <a href="#features">特徵清單</a>
+  <a href="#quality">先修的資料問題</a>
+  <a href="#daynight">同杆日夜</a>
+  <a href="#period">整段期間</a>
+  <a href="#crosspole">跨杆差異</a>
+  <a href="#relations">特徵關係與異常線索</a>
+  <a href="#treatment">建議處理方式</a>
+</nav>
+
+<section id="summary">
+  <div class="head"><h2>結論摘要</h2>
+  <p class="sec-q prose">核心問題：不同杆的同一個特徵，是否來自同一個統計分佈？如果不是，建模前要怎麼處理？</p></div>
+  <div class="stat-row">
+    <div class="stat"><span class="v">0.67</span><span class="l">總功率原始值，杆間平均 KS 距離</span></div>
+    <div class="stat"><span class="v">0.36</span><span class="l">每杆 robust 標準化後</span></div>
+    <div class="stat"><span class="v">0.14</span><span class="l">每杆 × 每小時基準殘差後</span></div>
+  </div>
+  <ul class="findings">
+    <li><span class="tag dist">分佈</span><p><b>各杆原始用電不是同一個分佈。</b>差異主要來自設備配置：有沒有數位看板、智慧指標、網路設備，而不是隨機雜訊。SP-03、SP-04 跟其他杆幾乎完全不重疊（KS D ≈ 1）。</p></li>
+    <li><span class="tag dist">分佈</span><p><b>「每杆 × 每小時」基準殘差能把杆間差異壓到很低</b>（KS 0.67 → 0.14），殘差的形狀在 10 根杆之間已經相當一致，可以放進同一個模型。</p></li>
+    <li><span class="tag dist">分佈</span><p><b>路燈亮度與電壓本來就跨杆一致。</b>路燈由同一套排程控制，電壓來自共用電網（杆間相關 0.97 以上），這兩個特徵要當成共同的外部條件來用，不是逐杆正規化的對象。</p></li>
+    <li><span class="tag dq">資料品質</span><p><b>MP 迴路就是杆體總電源</b>，其他迴路都已包含在內。把所有迴路相加會重複計算，杆體總功率應直接用 MP。</p></li>
+    <li><span class="tag dq">資料品質</span><p><b>-20 型電表（SP-02/03/07/08/09）在 1/2 – 1/22 讀值放大了 100 倍</b>，pf 也有近兩成超出 ±1。已在寬表中修正 ×100 並加上標記；pf 建議不用。</p></li>
+    <li><span class="tag anom">異常線索</span><p><b>SP-03 的路燈迴路整整兩個月都是 0W</b>，但路燈控制器同時回報亮度 100%。這正是提案裡「燈控說亮、電表沒電」的典型案例，可以當成現成的驗證樣本。</p></li>
+  </ul>
+</section>
+
+<section id="features">
+  <div class="head"><h2>會拿去 fit 的特徵</h2>
+  <p class="sec-q prose">寬表 <code>outputs/pole_ts_15min.parquet</code>：每根杆每 15 分鐘一列。電表迴路明細只存在於時段 A；時段 B 的電表只能還原出杆體總量。</p></div>
+  <div class="tbl">
+  <table>
+    <thead><tr><th>特徵</th><th>意義 / 單位</th><th>來源</th><th>時段</th><th>涵蓋</th><th>建議</th></tr></thead>
+    <tbody>
+      <tr><td><span class="mono">w_total</span></td><td>杆體總功率 = MP 總電源（W）</td><td>電表</td><td>A、B</td><td>10 杆</td><td><span class="keep">保留</span> 主要標的</td></tr>
+      <tr><td><span class="mono">w_signage</span></td><td>數位看板迴路功率（W）</td><td>電表</td><td>A</td><td>10 杆（SP-03、04 恆為 0）</td><td><span class="keep">保留</span></td></tr>
+      <tr><td><span class="mono">w_light</span></td><td>路燈迴路功率（W）</td><td>電表</td><td>A</td><td>10 杆（SP-03 恆為 0）</td><td><span class="keep">保留</span></td></tr>
+      <tr><td><span class="mono">w_camera</span></td><td>攝影機迴路功率（W）</td><td>電表</td><td>A</td><td>9 杆（SP-07 無此迴路）</td><td><span class="keep">保留</span></td></tr>
+      <tr><td><span class="mono">w_indicator</span></td><td>智慧指標迴路功率（W）</td><td>電表</td><td>A</td><td>9 杆，只有 SP-04、10 有在用電</td><td><span class="keep">保留</span> 附存在遮罩</td></tr>
+      <tr><td><span class="mono">w_network</span></td><td>網路設備迴路功率（W）</td><td>電表</td><td>A</td><td>6 杆</td><td><span class="keep">保留</span> 附存在遮罩</td></tr>
+      <tr><td><span class="mono">w_unmetered</span></td><td>MP − 各分迴路加總（W），未被分迴路量到的用電</td><td>衍生</td><td>A</td><td>10 杆</td><td><span class="keep">新增</span></td></tr>
+      <tr><td><span class="mono">w_env</span></td><td>環境感測迴路功率（W）</td><td>電表</td><td>A</td><td>只有 SP-05</td><td><span class="drop">不用</span> 覆蓋太低</td></tr>
+      <tr><td><span class="mono">a_*</span></td><td>各迴路電流（A）</td><td>電表</td><td>A</td><td>同迴路</td><td><span class="drop">不用</span> 與 w、v 資訊重複</td></tr>
+      <tr><td><span class="mono">pf_*</span></td><td>各迴路功率因數</td><td>電表</td><td>A</td><td>同迴路</td><td><span class="drop">不用</span> -20 型讀值無效</td></tr>
+      <tr><td><span class="mono">v</span></td><td>電壓（V），同杆各迴路平均</td><td>電表</td><td>A、B</td><td>10 杆</td><td><span class="fix">轉換</span> 改用與 10 杆平均的偏差</td></tr>
+      <tr><td><span class="mono">hz</span></td><td>頻率（Hz）</td><td>電表</td><td>A、B</td><td>10 杆</td><td><span class="drop">不用</span> 恆為 60（標準差 0.017）</td></tr>
+      <tr><td><span class="mono">light_level</span></td><td>路燈控制器亮度（%）</td><td>路燈</td><td>A、B</td><td>10 杆，約 74% 時段有值</td><td><span class="keep">保留</span> 當條件輸入</td></tr>
+      <tr><td><span class="mono">light_status_ok</span></td><td>控制器狀態 = 1 的比例</td><td>路燈</td><td>A、B</td><td>10 杆</td><td><span class="drop">不用</span> 兩時段內恆為 1</td></tr>
+      <tr><td><span class="mono">people_count</span></td><td>人流（counting 事件數 / 15 分鐘）</td><td>攝影機</td><td>A、B</td><td>10 杆，61–89% 時段有值</td><td><span class="keep">保留</span> 優先度加權</td></tr>
+      <tr><td><span class="mono">person_detected</span></td><td>人員偵測事件數</td><td>攝影機</td><td>A、B</td><td>10 杆</td><td><span class="drop">不用</span> 兩時段內恆為 0</td></tr>
+      <tr><td><span class="mono">camera_status_ok</span></td><td>攝影機狀態 = 1 的比例</td><td>攝影機</td><td>A、B</td><td>10 杆</td><td><span class="drop">不用</span> 兩時段內恆為 1</td></tr>
+      <tr><td><span class="mono">hour</span>、<span class="mono">dow</span></td><td>時刻、星期</td><td>衍生</td><td>A、B</td><td>—</td><td><span class="keep">保留</span> 建基準用</td></tr>
+      <tr><td><span class="mono">scale_fault</span></td><td>×100 故障區間標記</td><td>衍生</td><td>A</td><td>-20 型 5 杆</td><td>只作標記，不進模型</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <figure class="fig">
+    <img src="00_coverage.png" alt="特徵 × 杆 的非缺值比例熱圖，時段 A 與時段 B 並列">
+    <figcaption><b>各特徵的覆蓋率。</b>時段 B 沒有任何迴路層級欄位，只剩 <code>w_total</code>、<code>v</code>、<code>hz</code> 與路燈、人流。時段 A 的 0% 格代表該杆沒有這個迴路，屬於結構性缺失，不應該補值。SP-10 在 2 月上旬有約一週電表斷訊；時段 B 的 SP-05、SP-10 路燈資料只有約四分之一時段有值。</figcaption>
+  </figure>
+</section>
+
+<section id="quality">
+  <div class="head"><h2>建模前必須先修的資料問題</h2>
+  <p class="sec-q prose">以下三件事如果不處理，後面所有分佈比較都會失真。前兩件已經在 <code>build_pole_timeseries.py</code> 裡修正。</p></div>
+
+  <h3>1. -20 型電表的 ×100 故障</h3>
+  <figure class="fig">
+    <img src="05_scale_fault.png" alt="SP-02 攝影機迴路功率，修正前後對照">
+    <figcaption><b>SP-02 攝影機迴路：修正前約 1,280W，修正後約 12.8W。</b>SP-02、03、07、08、09 在 1/2 17 時到 1/22 17 時左右，所有迴路的 <code>w</code> 與 <code>a</code> 都剛好放大 100 倍，電流甚至飽和在 99.99A。依每杆實際的切換時間偵測後除以 100。累積電量 <code>whplus</code> 在這段期間也跟著放大，並在故障結束時往下跳，之後如果要用電量差分當特徵，需要另外處理。</figcaption>
+  </figure>
+
+  <h3>2. MP 是總電源，不是一個獨立設備</h3>
+  <figure class="fig">
+    <img src="02_week_stack_sp01.png" alt="SP-01 一週各分迴路功率堆疊，黑線為 MP 實測值">
+    <figcaption><b>各分迴路堆疊起來，剛好貼齊 MP 的實測線（黑線）。</b>9 根杆的 MP 與「其他迴路加總」相關係數都在 0.995 以上；唯一例外是 SP-03，因為它幾乎沒有變化，算不出相關。所以 <code>w_total</code> 改用 MP；時段 B 每個時間點的多筆資料中，最大的一筆就是 MP。<code>w_unmetered</code> 各杆中位數為 3–13W，SP-09 偏高達 37W。</figcaption>
+  </figure>
+
+  <h3>3. 功率因數在 -20 型電表上無效</h3>
+  <figure class="fig">
+    <img src="13_pf_by_model.png" alt="各杆 pf 分佈，依電表型號上色">
+    <figcaption><b>-20 型電表有 49% 的 pf 是負值，20% 超出 ±1。</b>超出 ±1 在物理上不可能，負號的意義也不明。-10 型電表的 pf 都在合理範圍內，但只用一半的杆會讓特徵不一致，建議整個欄位不用。</figcaption>
+  </figure>
+</section>
+
+<section id="daynight">
+  <div class="head"><h2>同一根杆：日夜變化</h2>
+  <p class="sec-q prose">每個特徵都有很強的日週期，而且不同設備的節奏不一樣。看板與 MP 跟著營業時間走，路燈跟著排程走，攝影機與網路設備幾乎是常數。</p></div>
+  <figure class="fig">
+    <img src="03_hour_heatmaps.png" alt="10 個特徵的杆 × 小時中位數熱圖">
+    <figcaption><b>數位看板約 7–16 時開啟，路燈約 17–6 時亮起；攝影機、智慧指標、網路設備全天幾乎持平。</b>人流集中在 12–18 時，SP-06 最多。電壓在凌晨最高、白天最低，10 根杆同步起伏；只有 SP-10 在夜間明顯偏高。</figcaption>
+  </figure>
+  <figure class="fig">
+    <img src="14_people.png" alt="人流：杆 × 小時熱圖，以及平日與週末的日曲線">
+    <figcaption><b>週末下午的人流約是平日的兩倍</b>（15 時高峰約 120 對 55）。基準若只分小時、不分平日週末，週末下午會被誤判成異常。</figcaption>
+  </figure>
+</section>
+
+<section id="period">
+  <div class="head"><h2>整段期間的變化</h2>
+  <p class="sec-q prose">時段 A、B 相隔三個月。同一根杆在兩段之間有沒有位移？</p></div>
+  <figure class="fig">
+    <img src="04_daily_trend.png" alt="10 杆日平均總功率，時段 A 與時段 B 疊圖">
+    <figcaption><b>多數杆在時段 B 的日平均略高於 A</b>，主要來自白天（夏季）。SP-03 兩段都停在約 25W。SP-04 在時段 B 的第 5 天左右從約 100W 掉到約 75W，之後一直維持在低水位，這是一個水準位移事件。SP-09 在時段 B 第 10–13 天有斷訊。</figcaption>
+  </figure>
+  <figure class="fig">
+    <img src="07_period_shift.png" alt="左：路燈亮度排程 A vs B；右：各杆夜間總功率 A vs B">
+    <figcaption><b>路燈排程在兩段之間改了：時段 A 夜間全亮 100%，時段 B 夜間只有約 18%。</b>照理夜間用電應該跟著下降。-10 型杆確實如此（SP-04 從 125W 降到 81W，SP-01 從 146W 降到 131W），但 -20 型杆（SP-02、07、08）的夜間總功率反而持平或微增，值得確認這些杆的燈具是否真的有依指令調光。</figcaption>
+  </figure>
+  <div class="callout"><p><b>對建模的影響：</b>時段 A 學到的「夜間正常用電」直接套到時段 B 會全部偏離。基準必須把路燈亮度當成輸入條件，或依排程分層建立；不能拿 A 訓練、B 推論而不做調整。</p></div>
+</section>
+
+<section id="crosspole">
+  <div class="head"><h2>跨杆差異</h2>
+  <p class="sec-q prose">回到核心問題：A 杆與 B 杆的用電是否來自同一個分佈？</p></div>
+  <figure class="fig">
+    <img src="01_config_matrix.png" alt="杆 × 迴路的白天與夜間中位數功率">
+    <figcaption><b>杆與杆之間的差異，大部分可以用設備配置解釋。</b>SP-03 的看板、路燈、智慧指標都沒有用電；SP-04 的看板不亮，但智慧指標持續用電約 41W，路燈也比別杆耗電（55W 對 27W）；只有 SP-04、SP-10 的智慧指標在用電；網路設備只有 6 根杆有獨立迴路。</figcaption>
+  </figure>
+  <figure class="fig">
+    <img src="08_box_daynight.png" alt="各杆總功率箱型圖，白天與夜間">
+    <figcaption><b>白天的杆間差異遠大於夜間。</b>夜間各杆集中在 130–250W（SP-03、04 例外），白天則從 70W 到 450W 都有。SP-02、07、08 的白天分佈特別寬，代表看板的開關時間不固定。</figcaption>
+  </figure>
+  <figure class="fig">
+    <img src="09_ks_matrix_w_total.png" alt="三個 KS 距離矩陣：原始、每杆標準化、每杆每小時殘差">
+    <figcaption><b>KS 統計量 D 衡量兩根杆的分佈有多不同：0 代表相同，1 代表完全不重疊。</b>樣本數很大時 p 值一律趨近 0、沒有參考價值，所以這裡看效果量 D。原始值平均 0.67；每杆 robust 標準化只解決「水準不同」，平均剩 0.36；再扣掉每杆每小時的基準（同時處理水準與日週期形狀），平均剩 0.14，已經沒有哪根杆特別突出。</figcaption>
+  </figure>
+  <figure class="fig">
+    <img src="10_normalization_boxes.png" alt="三種處理後的分佈箱型圖">
+    <figcaption><b>三種處理後的分佈形狀。</b>robust 標準化之後，SP-04 仍然偏在一邊（因為它白天比夜間低，跟別杆相反）；基準殘差之後，各杆都以 0 為中心、寬度接近。SP-06 的殘差尾巴最長，代表它的變動較大，實作時可以依杆設定不同的門檻。</figcaption>
+  </figure>
+  <figure class="fig">
+    <img src="11_ks_by_feature.png" alt="每個特徵在三種處理下的跨杆平均 KS">
+    <figcaption><b>每個特徵都做同樣的比較。</b>用電類特徵經基準殘差後都能降到 0.1–0.25。路燈亮度原始值就已經一致（0.02），因為是同一套排程在控制；它的殘差反而變大，是因為亮度幾乎只有 0 與 100 兩種值，MAD 接近 0 會放大雜訊。這類「共同控制變數」不需要逐杆正規化。</figcaption>
+  </figure>
+  <figure class="fig">
+    <img src="12_voltage.png" alt="三天電壓曲線與杆間電壓相關矩陣">
+    <figcaption><b>電壓是全區共用的訊號。</b>SP-01 到 SP-09 兩兩相關都在 0.97 以上，一起起伏。SP-10 例外：它與其他杆的相關只有 0.78–0.87，而且每天傍晚約 18 時會突然升高 3–4V，推測是接在不同的變壓器或分接頭上。建議特徵用「與 10 杆平均的偏差」，這樣共同的電網波動會被抵銷，只留下單杆自己的異常。</figcaption>
+  </figure>
+</section>
+
+<section id="relations">
+  <div class="head"><h2>特徵之間的關係與異常線索</h2>
+  <p class="sec-q prose">跨系統的一致性（燈控說的 vs 電表量到的）本身就是一個很強的異常特徵。</p></div>
+  <figure class="fig">
+    <img src="06_light_consistency.png" alt="10 杆的路燈亮度 vs 路燈迴路功率散佈圖">
+    <figcaption><b>正常的杆，亮度 100% 時路燈迴路約 27–30W（SP-04 為 55W），亮度 0% 時接近 0W。</b>SP-03 不論亮度多少都是 0W，是明確的異常。其他杆在亮度 100% 時，偶爾也會出現約 17W 或約 1W 的點，代表燈沒有全亮；這些都是「亮度 vs 功率殘差」這個特徵可以抓到的事件。</figcaption>
+  </figure>
+  <div class="grid2">
+    <figure class="fig">
+      <img src="15_feature_corr.png" alt="特徵間 Spearman 相關矩陣">
+      <figcaption><b>總功率與數位看板的相關係數 0.96</b>，杆體用電的變動主要由看板決定。路燈與亮度相關 0.73。電壓與人流呈負相關（−0.49），但這只是兩者都跟著日週期走，不是因果，扣掉日週期後應會消失。</figcaption>
+    </figure>
+    <div class="callout flag" style="align-self: start;">
+      <p><b>目前看到的異常線索</b></p>
+      <ul style="margin: 8px 0 0; padding-left: 20px;">
+        <li>SP-03：路燈、看板、智慧指標三個迴路兩個月都是 0W，燈控卻回報亮度 100%。</li>
+        <li>SP-04：時段 B 第 5 天起總功率從約 100W 降到約 75W。</li>
+        <li>-20 型杆：路燈改成調光後，夜間用電沒有跟著下降。</li>
+        <li>SP-09：未計量用電 37W，是其他杆的 3 倍以上。</li>
+        <li>SP-01（1/12–1/14）：夜間路燈迴路反覆閃爍（見同杆一週堆疊圖）。</li>
+        <li>SP-10：電壓每天傍晚跳升，且與其他杆的同步性較低。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="treatment">
+  <div class="head"><h2>建議處理方式</h2>
+  <p class="sec-q prose">依特徵性質分成四類，每類的處理方式不同。</p></div>
+  <div class="tbl">
+  <table>
+    <thead><tr><th>特徵性質</th><th>代表特徵</th><th>跨杆分佈</th><th>建議處理</th></tr></thead>
+    <tbody>
+      <tr><td>設備配置決定的用電</td><td><span class="mono">w_total</span>、<span class="mono">w_signage</span>、<span class="mono">w_light</span>、<span class="mono">w_camera</span>、<span class="mono">w_unmetered</span></td><td>水準與日週期形狀都不同（KS 0.4–0.9）</td><td>每杆 × 每小時 × 平日/週末建立基準（中位數），模型輸入為 <code>(x − 基準) / MAD</code>。可以用一個全域模型，各杆共用殘差分佈。</td></tr>
+      <tr><td>共同控制變數</td><td><span class="mono">light_level</span></td><td>本來就一致（KS 0.02）</td><td>不正規化，直接當條件輸入。基準依亮度分層，因為 A、B 的排程不同。</td></tr>
+      <tr><td>共用環境訊號</td><td><span class="mono">v</span></td><td>水準略有差異，起伏高度同步</td><td>轉成與 10 杆平均的偏差；10 杆平均本身可以當全域特徵。</td></tr>
+      <tr><td>外生負載</td><td><span class="mono">people_count</span></td><td>水準差很多（SP-06 最多、SP-05 最少）</td><td>每杆標準化；只用在優先度加權，不進入異常偵測本身。</td></tr>
+      <tr><td>結構性缺失</td><td><span class="mono">w_indicator</span>、<span class="mono">w_network</span></td><td>部分杆根本沒有這個迴路</td><td>不補值。改加 0/1 存在遮罩，或只用所有杆都有的迴路。</td></tr>
+      <tr><td>常數或無效欄位</td><td><span class="mono">hz</span>、<span class="mono">pf_*</span>、<span class="mono">a_*</span>、各狀態欄位</td><td>—</td><td>移除。</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="prose" style="display: grid; gap: 12px;">
+    <p><b>要先決定的一件事：用哪個時段訓練？</b>時段 B 只有杆體總量。如果模型要同時用 A、B，輸入只能是杆體層級的特徵（<code>w_total</code>、<code>v</code>、<code>light_level</code>、<code>people_count</code>），迴路明細只能在 A 期拿來做下鑽與驗證。如果只用 A，可以用迴路明細，但訓練資料只有 59 天，且路燈排程與 B 不同。</p>
+    <p><b>建議接著做的衍生特徵：</b>亮度 vs 路燈功率的殘差（燈控與電表的一致性）、<code>w_unmetered</code>、電壓偏差、累積電量 <code>whplus</code> 的 15 分鐘差分（需先處理故障區間的跳動）。</p>
+  </div>
+</section>
+
+<footer>
+  <p>重現方式：<span class="mono">uv run python scripts/build_pole_timeseries.py</span>，接著 <span class="mono">uv run python scripts/eda_features.py</span></p>
+  <p>資料來源：meterinfo2、115年5月-6月_各杆體總耗能_台北_v2.xlsx、lightnumberinfo、cameranumberinfo / camerastringinfo，杆號對照見 device_pole_map。</p>
+</footer>
+</div>
