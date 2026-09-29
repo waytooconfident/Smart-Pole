@@ -13,3 +13,6 @@
 .venv/
 __pycache__/
 *.pyc
+
+# 原始資料集另一種放法（整包放在 dataset/ 底下），同樣不納入版本控制
+/dataset/
